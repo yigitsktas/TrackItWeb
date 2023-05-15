@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"]</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/TrackItWeb.styles.css" asp-append-version="true" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="icon" type="image/x-icon" href="~/icon.png">
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border box-shadow mb-3">
+			<div class="container">
+				<a class="navbar-brand fw-bold" asp-area="" asp-page="/Home/Index" style="font-size:30px">TRACKIT</a>
+				<button class="navbar-toggler btn-outline-dark border-dark rounded-0" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon dark"></span>
+				</button>
+				@if (User.Identity?.IsAuthenticated == true)
+				{
+					<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+						<ul class="navbar-nav flex-grow-1">
+							<li class="nav-item">
+								<a class="nav-link fw-bold text-dark" asp-area="" asp-page="/Nutrient/Index" style="font-size:20px">health</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link fw-bold text-dark" asp-area="" asp-page="/Workout/Index" style="font-size:20px">fitness</a>
+							</li>
+				@*			<li class="nav-item">
+								<a class="nav-link fw-bold text-dark" asp-area="" asp-page="/Workout/Index" style="font-size:20px">ai coach</a>
+							</li>*@
+							<li class="nav-item">
+								<a class="nav-link fw-bold text-dark" asp-area="" asp-page="/Member/Profile" style="font-size:20px">profile</a>
+							</li>
+						</ul>
+
+						<form method="post" asp-page="/Authentication/Login" asp-page-handler="Logout">
+							<button class="btn btn-outline-dark btn-sm rounded-0 float-end fw-bold" type="submit" onclick="return confirm('Are You Sure?');">logout.</button>
+						</form>
+
+					</div>
+				}
+				else
+				{
+					<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+						<ul class="navbar-nav flex-grow-1">
+							<li class="nav-item">
+								<a class="nav-link fw-bold text-dark" asp-area="" asp-page="/Authentication/Login" style="font-size:20px">login</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link fw-bold text-dark" asp-area="" asp-page="/Authentication/Register" style="font-size:20px">register</a>
+							</li>
+						</ul>
+					</div>
+				}
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+	<footer class="footer">
+		<div class="container text-center">
+			<p class="text-dark fw-bold">all rights reserved®</p>
+		</div>
+	</footer>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,115 @@
+﻿@page
+@model TrackItWeb.Pages.Workout.AnalyticsModel
+@{
+	ViewData["Title"] = "my progress.";
+}
+
+<style>
+	#chart {
+		max-width: 1050px;
+		margin: 10px auto;
+	}
+</style>
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item" aria-current="page"><a class="text-decoration-none text-dark" href="/Nutrient/Index">health</a></li>
+		<li class="breadcrumb-item active" aria-current="page">my progress</li>
+	</ol>
+</nav>
+
+<h1 class="text-center fw-bold text-dark mb-1">nutrient // <b id="charttitle"></b></h1>
+
+<div class="row">
+	<div class="col-xl-12 col-md-12 text-center">
+		<select id="charttype" class="form-control-sm border border-2 rounded bg-transparent text-dark fw-bold" onchange="SetChartDetails();">
+			<option class="text-dark" value="Weekly" selected>weekly</option>
+			<option class="text-dark" value="Monthly">monthly</option>
+		</select>
+	</div>
+</div>
+
+<div id="chart">
+</div>
+
+<div class="col-xl-12 text-center">
+	<a class="btn btn-outline-dark border-2 btn-sm m-3 rounded-0 fw-bold" href="/Workout/Index">go back.</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+	SetChartDetails();
+
+	function SetChartDetails() {
+		var DataName = $("#charttype option:selected").val();
+		var Params = " ";
+
+		$("#charttitle").text($("#charttype option:selected").text())
+
+		var options = {
+			series: [],
+			chart: {
+				type: 'area', fontFamily: 'Arial', height: 470, width: "100%", defaultLocale: 'en',
+				locales: [{
+					"name": "tr",
+					"options": {
+						"toolbar": {
+							"exportToSVG": "SVG İndir",
+							"exportToCSV": "CSV İndir",
+							"exportToPNG": "PNG İndir",
+							"menu": "Menü",
+							"selection": "Seç",
+							"selectionZoom": "Seçerek Yakınlaştır",
+							"zoomIn": "Yaklaştır",
+							"zoomOut": "Uzaklaştır",
+							"pan": "Kaydırma",
+							"reset": "Sıfırla"
+						}
+					}
+				}],
+				defaultLocale: "tr"
+			},
+			colors: ['#FA7900'],
+			tooltip: { enabled: true },
+			dataLabels: { enabled: true },
+			//stroke: { curve: 'straight' },
+			grid: { show: true, borderColor: '#000000' },
+			xaxis: {
+				labels: {
+					show: true,
+					style: {
+						fontSize: '14px',
+						cssClass: 'apexcharts-yaxis-label',
+						colors: '#000000'
+					}
+				}
+			},
+			yaxis: {
+				labels: {
+					show: true,
+					align: 'right',
+					style: {
+						fontSize: '12px',
+						cssClass: 'apexcharts-xaxis-label',
+						colors: '#000000'
+					}
+				}
+			}
+		};
+
+		var chart = new ApexCharts(document.querySelector('#chart'), options);
+		chart.render();
+
+		var url = "?Filter=" + DataName + "&handler=Formatted";
+
+		$.getJSON(url, function (response) {
+			chart.updateSeries([{
+				name: 'cal',
+				data: response
+			}])
+		});
+		chart.resetSeries();
+	}
+
+</script>
