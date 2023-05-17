@@ -31,14 +31,13 @@
 							<li class="nav-item">
 								<a class="nav-link fw-bold text-dark" asp-area="" asp-page="/Workout/Index" style="font-size:20px">fitness</a>
 							</li>
-				@*			<li class="nav-item">
-								<a class="nav-link fw-bold text-dark" asp-area="" asp-page="/Workout/Index" style="font-size:20px">ai coach</a>
-							</li>*@
+							<li class="nav-item">
+								<a class="nav-link fw-bold text-dark" asp-area="" asp-page="/Member/Coach" style="font-size:20px">AI coach</a>
+							</li>
 							<li class="nav-item">
 								<a class="nav-link fw-bold text-dark" asp-area="" asp-page="/Member/Profile" style="font-size:20px">profile</a>
 							</li>
 						</ul>
-
 						<form method="post" asp-page="/Authentication/Login" asp-page-handler="Logout">
 							<button class="btn btn-outline-dark btn-sm rounded-0 float-end fw-bold" type="submit" onclick="return confirm('Are You Sure?');">logout.</button>
 						</form>

@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using TrackItWeb.DataModels;
 using TrackItWeb.Entities;
+using TrackItWeb.Helpers;
 
 namespace TrackItWeb.Pages.Nutrient
 {
@@ -30,7 +32,36 @@ namespace TrackItWeb.Pages.Nutrient
 			{
 				return RedirectToPage("/Error");
 			}
-
 		}
-	}
+		
+		[BindProperty]
+		public AddNutrientLogDM? addLogDM { get; set; } 
+
+        public async Task<IActionResult> OnPost()
+		{
+			MemberNutrient memberNutrient = new();
+
+			memberNutrient.MemberID = User.GetMemberID();
+			memberNutrient.NutrientID = addLogDM.NutrientID;
+			memberNutrient.Notes = addLogDM.Notes;
+			memberNutrient.ServingSize = addLogDM.Portions;
+			memberNutrient.ServingType = addLogDM.ServingType;
+
+			var info = JsonConvert.SerializeObject(memberNutrient);
+
+            var client = new HttpClient();
+            string url = "https://localhost:7004/api/Nutrient/CreateMemberNutrient" + info + string.Empty;
+            client.BaseAddress = new Uri(url);
+            HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+            if (responseMessage.IsSuccessStatusCode == true)
+            {
+                return RedirectToPage("/Nutrient/Log");
+            }
+            else
+            {
+                return RedirectToPage("/Error");
+            }
+		}
+    }
 }
