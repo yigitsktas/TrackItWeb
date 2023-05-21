@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
+using TrackItWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,7 @@ builder.Services.AddAuthorization(options =>
 {
 });
 
+builder.Services.AddTransient<APIService>();
 
 var cookiePolicyOptions = new CookiePolicyOptions
 {

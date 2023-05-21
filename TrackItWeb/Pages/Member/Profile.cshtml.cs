@@ -4,57 +4,42 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Net;
 using TrackItWeb.Helpers;
+using TrackItWeb.Services;
 
 namespace TrackItWeb.Pages.Member
 {
     [Authorize]
     public class ProfileModel : PageModel
     {
+		private readonly APIService _apiService;
 
-        public Profile_DM? Index_VM { get; set; }
+		public ProfileModel(APIService apiService)
+		{
+			_apiService = apiService;
+		}
+
+		public Profile_DM? Index_VM { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
             Profile_DM model = new();
 
-			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/GetMember/" + User.GetMemberID();
+            var member = await _apiService.GetMember(User.GetMemberID());
 
-			client.BaseAddress = new Uri(url);
-			HttpResponseMessage responseMessage = await client.GetAsync(url);
-
-            if (responseMessage.IsSuccessStatusCode == true) 
+            if (member != null)
             {
-				var member = JsonConvert.DeserializeObject<TrackItWeb.Entities.Member>(await responseMessage.Content.ReadAsStringAsync());
+                model.Username = member.Username;
+                model.EMail = member.EMail;
+            }
 
-                if (member != null)
-                {
-                    model.Username = member.Username;
-                    model.EMail = member.EMail;
-                }
-			}
-			else 
-            {
-				return Page();
-			}
+			var memberMetric = await _apiService.GetMemberMetric(User.GetMemberID());
 
-			url = "https://localhost:7004/api/Member/GetMemberMetric/" + User.GetMemberID();
-			HttpResponseMessage responseMessage1 = await client.GetAsync(url);
-            if (responseMessage1.IsSuccessStatusCode == true)
-            {
-				var memberMetric = JsonConvert.DeserializeObject<TrackItWeb.Entities.MemberMetric>(await responseMessage.Content.ReadAsStringAsync());
-                    
-                if (memberMetric != null) 
-                { 
-                    model.Height = memberMetric.Height;
-                    model.Weight = memberMetric.Weight;
-                    model.BMI = memberMetric.BMI;
-                }
-			}
-			else
-			{
-				return Page();
-			}
+            if (memberMetric != null) 
+            { 
+                model.Height = memberMetric.Height;
+                model.Weight = memberMetric.Weight;
+                model.BMI = memberMetric.BMI;
+            }
 
             Index_VM = model;
 
@@ -63,7 +48,6 @@ namespace TrackItWeb.Pages.Member
 
         public async Task<IActionResult> OnPostUpdate()
         {
-
             return Page();
         }
 

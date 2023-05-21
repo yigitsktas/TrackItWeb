@@ -5,48 +5,34 @@ using Newtonsoft.Json;
 using TrackItWeb.DataModels;
 using TrackItWeb.Entities;
 using TrackItWeb.Helpers;
+using TrackItWeb.Services;
 
 namespace TrackItWeb.Pages.Workout
 {
 	public class MSWAddNewModel : PageModel
 	{
+		private readonly APIService _apiService;
+
+		public MSWAddNewModel(APIService apiService)
+		{
+			_apiService = apiService;
+		}
+
 		public SelectList? WorkoutTypes { get; set; }
 		public SelectList? MuscleGroups { get; set; }
 
 		public async Task<IActionResult> OnGet()
 		{
-			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetWorkoutTypes";
-			client.BaseAddress = new Uri(url);
-			HttpResponseMessage responseMessage = await client.GetAsync(url);
+			var workoutTypes = await _apiService.GetWorkoutTypes();
+			if (workoutTypes == null) { new SelectList(Enumerable.Empty<SelectListItem>()); }
+			else { WorkoutTypes = new SelectList(workoutTypes, nameof(WorkoutType.WorkoutTypeID), nameof(WorkoutType.Name)); }
+			
 
-			if (responseMessage.IsSuccessStatusCode == true)
-			{
-				var workoutTypes = JsonConvert.DeserializeObject<List<TrackItWeb.Entities.WorkoutType>>(await responseMessage.Content.ReadAsStringAsync());
+			var muscleGroups = await _apiService.GetMuscleGroups();
+			if (muscleGroups == null) { new SelectList(Enumerable.Empty<SelectListItem>()); }
+			else{ MuscleGroups = new SelectList(muscleGroups, nameof(MuscleGroup.MuscleGroupID), nameof(MuscleGroup.Name)); }
 
-				WorkoutTypes = new SelectList(workoutTypes, nameof(WorkoutType.WorkoutTypeID), nameof(WorkoutType.Name));
-
-				url = "https://localhost:7004/api/Workout/GetMuscleGroups";
-				HttpResponseMessage responseMessage1 = await client.GetAsync(url);
-
-				if (responseMessage1.IsSuccessStatusCode == true)
-				{
-					var muscleGroups = JsonConvert.DeserializeObject<List<TrackItWeb.Entities.MuscleGroup>>(await responseMessage1.Content.ReadAsStringAsync());
-
-					MuscleGroups = new SelectList(muscleGroups, nameof(MuscleGroup.MuscleGroupID), nameof(MuscleGroup.Name));
-
-					return Page();
-				}
-
-				else
-				{
-					return RedirectToPage("/Error");
-				}
-			}
-			else
-			{
-				return RedirectToPage("/Error");
-			}
+			return Page();
 		}
 
 		[BindProperty]
@@ -74,23 +60,20 @@ namespace TrackItWeb.Pages.Workout
 
 				var info = JsonConvert.SerializeObject(msworkout);
 
-				var client = new HttpClient();
-				string url = "https://localhost:7004/api/Workout/CreateMSWorkout/" + info;
-				client.BaseAddress = new Uri(url);
-				HttpResponseMessage responseMessage = await client.GetAsync(url);
+				var isTrue	= await _apiService.CreateMSWorkout(info);
 
-				if (responseMessage.IsSuccessStatusCode == true)
+				if (isTrue == true)
 				{
-					return RedirectToPage("/Exercises"); 
+					return RedirectToPage("/Exercises");
 				}
 				else
 				{
-					return RedirectToPage("/Error"); 
+					return RedirectToPage("/Error");
 				}
 			}
 			else
 			{
-				return RedirectToPage("/Error"); 
+				return RedirectToPage("/Error");
 			}
 		}
 	}

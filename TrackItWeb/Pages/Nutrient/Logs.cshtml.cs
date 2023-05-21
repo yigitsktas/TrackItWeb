@@ -5,59 +5,53 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using TrackItWeb.Entities;
 using TrackItWeb.Helpers;
+using TrackItWeb.Services;
 
 namespace TrackItWeb.Pages.Nutrient
 {
-    [Authorize]
-    public class LogsModel : PageModel
-    {
+	[Authorize]
+	public class LogsModel : PageModel
+	{
+		private readonly APIService _apiService;
+
+		public LogsModel(APIService apiService)
+		{
+			_apiService = apiService;
+		}
+
 		public List<IndexVM>? Index { get; set; }
 
-        public async Task<IActionResult> OnGet()
-        {
-			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetMemberNutrientLog/" + User.GetMemberID();
-			client.BaseAddress = new Uri(url);
-			HttpResponseMessage responseMessage = await client.GetAsync(url);
+		public async Task<IActionResult> OnGet()
+		{
+			var memberNutrients = await _apiService.GetMemberNutrientLogs(User.GetMemberID());
 
-			if (responseMessage.IsSuccessStatusCode == true)
+			if (memberNutrients != null)
 			{
 				List<IndexVM> memberNutrientsLogs = new();
 
-				var data = JsonConvert.DeserializeObject<List<MemberNutrient>>(await responseMessage.Content.ReadAsStringAsync());
-
-				if (data != null)
+				foreach (var item in memberNutrients)
 				{
-					foreach (var item in data)
+					IndexVM index = new();
+
+					var nutrient = await _apiService.GetNutrientByID(item.NutrientID);
+
+					if (nutrient != null)
 					{
-						IndexVM index = new();
+						double totalCalorie = 0;
 
-						url = "https://localhost:7004/api/Nutrient/GetNutrientByID/" + item.NutrientID;
-						HttpResponseMessage responseMessage1 = await client.GetAsync(url);
+						totalCalorie = (nutrient.Calorie / 100) * item.ServingSize;
 
-						if (responseMessage1.IsSuccessStatusCode == true)
-						{
-							var data1 = JsonConvert.DeserializeObject<TrackItWeb.Entities.Nutrient>(await responseMessage1.Content.ReadAsStringAsync());
+						index.MemberNutrientID = item.NutrientID;
+						index.NutrientName = nutrient.NutrientName;
+						index.TotalCalorie = totalCalorie;
+						index.CreatedDate = item.CreatedDate;
 
-							if (data1 != null)
-							{
-								double totalCalorie = 0;
-
-								totalCalorie = (data1.Calorie / 100) * item.ServingSize;
-
-								index.MemberNutrientID = item.NutrientID;
-								index.NutrientName = data1.NutrientName;
-								index.TotalCalorie = totalCalorie;
-								index.CreatedDate = item.CreatedDate;
-
-								memberNutrientsLogs.Add(index);	
-							}
-						}
+						memberNutrientsLogs.Add(index);
 					}
-
-					Index = memberNutrientsLogs;
 				}
 
+				Index = memberNutrientsLogs;
+				
 				return Page();
 			}
 			else
@@ -65,13 +59,13 @@ namespace TrackItWeb.Pages.Nutrient
 				return RedirectToPage("/Error");
 			}
 		}
-
-		public class IndexVM
-		{
-			public int MemberNutrientID { get; set; }
-			public string? NutrientName { get; set; }
-			public DateTime CreatedDate { get; set; }
-			public double TotalCalorie { get; set; }
-		}
 	}
+}
+
+public class IndexVM
+{
+	public int MemberNutrientID { get; set; }
+	public string? NutrientName { get; set; }
+	public DateTime CreatedDate { get; set; }
+	public double TotalCalorie { get; set; }
 }

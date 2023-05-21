@@ -4,12 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Security.Claims;
+using TrackItWeb.Services;
 
 namespace TrackItWeb.Pages.Authentication
 {
     public class RegisterModel : PageModel
     {
-        public IActionResult OnGet()
+		private readonly APIService _apiService;
+
+		public RegisterModel(APIService apiService)
+		{
+			_apiService = apiService;
+		}
+
+		public IActionResult OnGet()
         {
             return Page();
         }
@@ -30,15 +38,11 @@ namespace TrackItWeb.Pages.Authentication
 
                 var info = JsonConvert.SerializeObject(member);
 
-                var client = new HttpClient();
-                string url = "https://localhost:7004/api/Member/CreateUser/" + info;
-                client.BaseAddress = new Uri(url);
-                HttpResponseMessage responseMessage = await client.GetAsync(url);
+                var isTrue = await _apiService.CreateUser(info);
 
-                if (responseMessage.IsSuccessStatusCode)
+                if (isTrue)
                 { 
                     return Redirect("/Home/Index");
-                
                 }
                 else
                 {

@@ -5,25 +5,28 @@ using Newtonsoft.Json;
 using TrackItWeb.DataModels;
 using TrackItWeb.Entities;
 using TrackItWeb.Helpers;
+using TrackItWeb.Services;
 
 namespace TrackItWeb.Pages.Nutrient
 {
 	public class AddLogModel : PageModel
 	{
+		private readonly APIService _apiService;
+
+		public AddLogModel(APIService apiService) 
+		{ 
+			_apiService = apiService;
+		}
+
 		public SelectList? Nutrients { get; set; }
 
 		public async Task<IActionResult> OnGet()
 		{
-			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetNutrients";
-			client.BaseAddress = new Uri(url);
-			HttpResponseMessage responseMessage = await client.GetAsync(url);
+			var nutrients = await _apiService.GetNutrients();
 
-			if (responseMessage.IsSuccessStatusCode == true)
+			if (nutrients != null)
 			{
-				var muscleGroups = JsonConvert.DeserializeObject<List<TrackItWeb.Entities.Nutrient>>(await responseMessage.Content.ReadAsStringAsync());
-
-				Nutrients = new SelectList(muscleGroups, nameof(TrackItWeb.Entities.Nutrient.NutrientID), nameof(TrackItWeb.Entities.Nutrient.NutrientName));
+				Nutrients = new SelectList(nutrients, nameof(TrackItWeb.Entities.Nutrient.NutrientID), nameof(TrackItWeb.Entities.Nutrient.NutrientName));
 
 				return Page();
 			}
@@ -50,12 +53,9 @@ namespace TrackItWeb.Pages.Nutrient
 
 			var info = JsonConvert.SerializeObject(memberNutrient);
 
-            var client = new HttpClient();
-            string url = "https://localhost:7004/api/Nutrient/CreateMemberNutrient/" + info + "/a";
-            client.BaseAddress = new Uri(url);
-            HttpResponseMessage responseMessage = await client.GetAsync(url);
+			var isTrue = await _apiService.CreateMemberNutrient(info);
 
-            if (responseMessage.IsSuccessStatusCode == true)
+            if (isTrue)
             {
                 return RedirectToPage("/Nutrient/Logs");
             }

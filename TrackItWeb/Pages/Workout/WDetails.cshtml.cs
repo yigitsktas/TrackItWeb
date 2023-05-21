@@ -3,27 +3,29 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System;
 using TrackItWeb.Entities;
+using TrackItWeb.Services;
 
 namespace TrackItWeb.Pages.Workout
 {
 	public class WorkoutDetailsModel : PageModel
 	{
+		private readonly APIService _apiService;
+
+		public WorkoutDetailsModel(APIService apiService)
+		{
+			_apiService = apiService;
+		}
+
 		public WDetail_DM Index_VM { get; set; }
 
 		public async Task<IActionResult> OnGet(int id)
 		{
 			WDetail_DM model = new();
 
-			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetWorkout/" + id;
+			var workout = await _apiService.GetWorkout(id);
 
-			client.BaseAddress = new Uri(url);
-			HttpResponseMessage responseMessage = await client.GetAsync(url);
-
-			if (responseMessage.IsSuccessStatusCode == true)
+			if (workout != null)
 			{
-				var workout = JsonConvert.DeserializeObject<TrackItWeb.Entities.Workout>(await responseMessage.Content.ReadAsStringAsync());
-
 				model.WorkoutID = workout.WorkoutID;
 				model.WorkoutName = workout.WorkoutName;
 				model.Description = workout.Description;
@@ -40,44 +42,23 @@ namespace TrackItWeb.Pages.Workout
 				}
 				model.Difficulty = workout.Difficulty;
 
-				url = "https://localhost:7004/api/Workout/GetWorkoutType/" + workout.WorkoutTypeID;
-				HttpResponseMessage responseMessage1 = await client.GetAsync(url);
-				if (responseMessage1.IsSuccessStatusCode == true)
+				var workoutType = await _apiService.GetWorkoutType(workout.WorkoutTypeID);
+
+				if (workoutType != null)
 				{
-					var workoutType = JsonConvert.DeserializeObject<TrackItWeb.Entities.WorkoutType>(await responseMessage1.Content.ReadAsStringAsync());
-
-					if (workoutType != null)
-					{
-						model.WorkoutType = workoutType.Name;
-					}
-					else
-					{
-						model.WorkoutType = " ";
-					}
+					model.WorkoutType = workoutType.Name;
 				}
-
 				else
 				{
 					model.WorkoutType = " ";
 				}
 
+				var muscleGroup = await _apiService.GetMuscleGroup(workout.MuscleGroupID);
 
-				url = "https://localhost:7004/api/Workout/GetMuscleGroup/" + workout.MuscleGroupID;
-				HttpResponseMessage responseMessage2 = await client.GetAsync(url);
-				if (responseMessage2.IsSuccessStatusCode == true)
+				if (muscleGroup != null)
 				{
-					var muscleGroup = JsonConvert.DeserializeObject<TrackItWeb.Entities.MuscleGroup>(await responseMessage2.Content.ReadAsStringAsync());
-
-					if (muscleGroup != null)
-					{
-						model.MuscleGroup = muscleGroup.Name;
-					}
-					else
-					{
-						model.MuscleGroup = " ";
-					}
+					model.MuscleGroup = muscleGroup.Name;
 				}
-
 				else
 				{
 					model.MuscleGroup = " ";

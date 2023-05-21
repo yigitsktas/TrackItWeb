@@ -3,12 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using TrackItWeb.Entities;
 using TrackItWeb.Helpers;
+using TrackItWeb.Services;
 
 namespace TrackItWeb.Pages.Nutrient
 {
     public class AddRecipesModel : PageModel
     {
-        [BindProperty]
+		private readonly APIService _apiService;
+
+		public AddRecipesModel(APIService apiService)
+		{
+			_apiService = apiService;
+		}
+
+		[BindProperty]
         public Recipe? recipeAdd { get; set; }
 
         public async Task<IActionResult> OnPost()
@@ -18,12 +26,9 @@ namespace TrackItWeb.Pages.Nutrient
 
             var info = JsonConvert.SerializeObject(recipeAdd);
 
-            var client = new HttpClient();
-            string url = "https://localhost:7004/api/Nutrient/CreateRecipe" + info;
-            client.BaseAddress = new Uri(url);
-            HttpResponseMessage responseMessage = await client.GetAsync(url);
+            var isTrue = await _apiService.CreateRecipe(info);
 
-            if (responseMessage.IsSuccessStatusCode == true)
+            if (isTrue)
             {
                 return RedirectToPage("/Nutrient/MyRecipes");
             }

@@ -1,28 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using TrackItWeb.Entities;
 using TrackItWeb.Helpers;
+using TrackItWeb.Services;
 
 namespace TrackItWeb.Pages.Workout
 {
     public class ExercisesModel : PageModel
     {
+		private readonly APIService _apiService;
+
+		public ExercisesModel(APIService apiService)
+		{
+			_apiService = apiService;
+		}
+
 		public List<MSWorkoutDM> Index_VM { get; set; }
 
 		public async Task<IActionResult> OnGet()
 		{
 			List<MSWorkoutDM> model = new();
+			
+			var workouts = await _apiService.GetMSWorkouts(User.GetMemberID());	
 
-			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetMSWorkouts/" + User.GetMemberID();
-
-			client.BaseAddress = new Uri(url);
-			HttpResponseMessage responseMessage = await client.GetAsync(url);
-
-			if (responseMessage.IsSuccessStatusCode == true)
+			if (workouts != null)
 			{
-				var workouts = JsonConvert.DeserializeObject<List<TrackItWeb.Entities.MemberSpecificWorkout>>(await responseMessage.Content.ReadAsStringAsync());
-
 				foreach (var item in workouts)
 				{
 					MSWorkoutDM workout = new();
