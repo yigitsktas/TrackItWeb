@@ -16,5 +16,6 @@ namespace TrackItWeb.Entities
         public string? Notes { get; set; }
         public double ServingSize { get; set; }
         public int ServingType { get; set; }
+        public DateTime CreatedDate{ get; set; }
     }
 }

@@ -46,17 +46,18 @@ namespace TrackItWeb.Pages.Nutrient
 			memberNutrient.Notes = addLogDM.Notes;
 			memberNutrient.ServingSize = addLogDM.Portions;
 			memberNutrient.ServingType = addLogDM.ServingType;
+			memberNutrient.CreatedDate = DateTime.Now;
 
 			var info = JsonConvert.SerializeObject(memberNutrient);
 
             var client = new HttpClient();
-            string url = "https://localhost:7004/api/Nutrient/CreateMemberNutrient" + info + string.Empty;
+            string url = "https://localhost:7004/api/Nutrient/CreateMemberNutrient/" + info + "/a";
             client.BaseAddress = new Uri(url);
             HttpResponseMessage responseMessage = await client.GetAsync(url);
 
             if (responseMessage.IsSuccessStatusCode == true)
             {
-                return RedirectToPage("/Nutrient/Log");
+                return RedirectToPage("/Nutrient/Logs");
             }
             else
             {

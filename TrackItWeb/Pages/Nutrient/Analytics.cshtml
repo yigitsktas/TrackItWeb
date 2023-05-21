@@ -18,13 +18,23 @@
 	</ol>
 </nav>
 
-<h1 class="text-center fw-bold text-dark mb-1">nutrient // <b id="charttitle"></b></h1>
+<h1 class="text-center fw-bold text-dark mb-1"><b id="charttitle"></b></h1>
+<h1 class="text-center fw-bold text-dark mb-1"><b id="charttitle2"></b></h1>
 
-<div class="row">
-	<div class="col-xl-12 col-md-12 text-center">
+<div class="row mt-3">
+	<div class="col-xl-6 col-md-12 col-6 text-center">
 		<select id="charttype" class="form-control-sm border border-2 rounded bg-transparent text-dark fw-bold" onchange="SetChartDetails();">
 			<option class="text-dark" value="Weekly" selected>weekly</option>
 			<option class="text-dark" value="Monthly">monthly</option>
+		</select>
+	</div>
+	<div class="col-xl-6 col-md-12 col-6 text-center">
+		<select id="charttype2" class="form-control-sm border border-2 rounded bg-transparent text-dark fw-bold" onchange="SetChartDetails();">
+			<option class="text-dark" value="Calorie" selected>total calorie</option>
+			<option class="text-dark" value="TotalFat">total fat</option>
+			<option class="text-dark" value="TotalCarb">total carb</option>
+			<option class="text-dark" value="TotalProt">total protein</option>
+			<option class="text-dark" value="TotalSug">total sugar</option>
 		</select>
 	</div>
 </div>
@@ -43,9 +53,11 @@
 
 	function SetChartDetails() {
 		var DataName = $("#charttype option:selected").val();
+		var DataName2 = $("#charttype2 option:selected").val();
 		var Params = " ";
 
 		$("#charttitle").text($("#charttype option:selected").text())
+		$("#charttitle2").text($("#charttype2 option:selected").text())
 
 		var options = {
 			series: [],
@@ -101,7 +113,7 @@
 		var chart = new ApexCharts(document.querySelector('#chart'), options);
 		chart.render();
 
-		var url = "?Filter=" + DataName + "&handler=Formatted";
+		var url = "?Filter=" + DataName + "&Filter2=" + DataName2 + "&handler=Formatted";
 
 		$.getJSON(url, function (response) {
 			chart.updateSeries([{
