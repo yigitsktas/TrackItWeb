@@ -29,9 +29,10 @@
 					<p class="fw-bold m-2 text-center">exercises you will like.</p>
 				</div>
 				<ul class="list-group list-group-flush fw-bold">
-					<li class="list-group-item">an item<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Nutrient/MyRecipes">➔</a></li>
-					<li class="list-group-item">an item<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Nutrient/MyRecipes">➔</a></li>
-					<li class="list-group-item">an item<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Nutrient/MyRecipes">➔</a></li>
+					@foreach (var item in Model.MyModel.Workouts)
+					{
+						<li class="list-group-item">@item.WorkoutName.ToLower()<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Workout/WDetails?id=@item.WorkoutID">➔</a></li>
+					}
 				</ul>
 			</div>
 		</div>
@@ -41,9 +42,10 @@
 					<p class="fw-bold m-2 text-center">recipes you will like.</p>
 				</div>
 				<ul class="list-group list-group-flush fw-bold">
-					<li class="list-group-item">an item<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Nutrient/MyRecipes">➔</a></li>
-					<li class="list-group-item">an item<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Nutrient/MyRecipes">➔</a></li>
-					<li class="list-group-item">an item<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Nutrient/MyRecipes">➔</a></li>
+					@foreach (var item in Model.MyModel.Recipes)
+					{
+						<li class="list-group-item">@item.Summary.ToLower()<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Nutrient/RDetails?id=@item.RecipeID">➔</a></li>
+					}
 				</ul>
 			</div>
 		</div>
@@ -97,10 +99,10 @@ else
 			<div class="col-xl-6 mt-3">
 				<div class="card text-center border-2 rounded-0 border-dark">
 					<div class="card-header fw-bolder rounded-0" style="background-color: black">
-						<h3 class="text-white">weekly recommendations.</h3>
+						<h3 class="text-white">AI coach.</h3>
 					</div>
 					<div class="card-body">
-						<h5 class="card-title">we offer weekly exercises recommended by our trainers.</h5>
+						<h5 class="card-title">you can easily ask your questions to our integrated AI.</h5>
 					</div>
 				</div>
 			</div>

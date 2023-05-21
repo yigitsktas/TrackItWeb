@@ -36,6 +36,33 @@ namespace TrackItWeb.Services
 			}
 		}
 
+		public async Task<List<Recipe>> GetMemberRecipes(int id)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Nutrient/GetMemberRecipes/" + id;
+
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			if (responseMessage.IsSuccessStatusCode == true)
+			{
+				var recipes = JsonConvert.DeserializeObject<List<Recipe>>(await responseMessage.Content.ReadAsStringAsync());
+
+				if (recipes != null)
+				{
+					return recipes;
+				}
+				else
+				{
+					return new List<Recipe>();
+				}
+			}
+			else
+			{
+				return new List<Recipe>();
+			}
+		}
+
 		public async Task<bool> CreateRecipe(string info)
 		{
 			var client = new HttpClient();
@@ -183,6 +210,33 @@ namespace TrackItWeb.Services
 			else
 			{
 				return new Recipe();
+			}
+		}
+
+		public async Task<List<Recipe>> GetRandomRecipes()
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Nutrient/GetRandomRecipe";
+
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			if (responseMessage.IsSuccessStatusCode == true)
+			{
+				var recipe = JsonConvert.DeserializeObject<List<Recipe>>(await responseMessage.Content.ReadAsStringAsync());
+
+				if (recipe != null)
+				{
+					return recipe;
+				}
+				else
+				{
+					return new List<Recipe>();
+				}
+			}
+			else
+			{
+				return new List<Recipe>();
 			}
 		}
 
@@ -388,6 +442,32 @@ namespace TrackItWeb.Services
 			}
 		}
 
+		public async Task<List<Workout>> GetRandomWorkouts()
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Workout/GetRandomWorkout";
+
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			if (responseMessage.IsSuccessStatusCode == true)
+			{
+				var workouts = JsonConvert.DeserializeObject<List<Workout>>(await responseMessage.Content.ReadAsStringAsync());
+				if (workouts != null)
+				{
+					return workouts;
+				}
+				else
+				{
+					return new List<Workout>();
+				}
+			}
+			else
+			{
+				return new List<Workout>();
+			}
+		}
+
 		#endregion
 
 
@@ -410,7 +490,7 @@ namespace TrackItWeb.Services
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
-			
+
 			return responseMessage.IsSuccessStatusCode;
 		}
 
@@ -469,6 +549,34 @@ namespace TrackItWeb.Services
 			}
 		}
 
+		#endregion
+
+
+		#region OpenAI
+		public async Task<string> GetAnswer(string prompt)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Member/GetAnswer/" + prompt;
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			if (responseMessage.IsSuccessStatusCode == true)
+			{
+				var answer = await responseMessage.Content.ReadAsStringAsync();
+
+				if (answer != null)
+				{
+					return answer;
+				}
+				else
+				{
+					return string.Empty;
+				}
+			}
+			else
+			{
+				return string.Empty;
+			}
+		}
 		#endregion
 	}
 }
