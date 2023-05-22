@@ -12,3 +12,48 @@
 	</ol>
 </nav>
 
+<div class="row">
+	<div class="col-xl-9 col-9">
+		<h4 class="fw-bold">@Model.MyModel.NutrientName // @Model.MyModel.Brand</h4>
+	</div>
+	<div class="col-xl-3 col-3">
+		<p style="font-size: 17px;" class="fw-bold">@Model.MyModel.CreatedDate.ToString("dd/MM/yyyy")</p>
+	</div>
+</div>
+
+<div class="row">
+	@{string type = "";}
+	@if (Model.MyModel.NutrientType == 1)
+	{
+		type = "ml";
+	}
+	else
+	{
+		type = "gr";
+	}
+	<div class="col-xl-3 col-6">
+		<p class="fw-bold">portions: @Model.MyModel.ServingSize @type</p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xl-3 col-3">
+		<p class="fw-bold">calorie: @Model.MyModel.Calorie</p>
+	</div>
+	<div class="col-xl-3 col-3">
+		<p class="fw-bold">carb: @Model.MyModel.TotalCarb.ToString("00.00")</p>
+	</div>
+	<div class="col-xl-3 col-3">
+		<p class="fw-bold">fat: @Model.MyModel.TotalFat.ToString("00.00")</p>
+	</div>
+	<div class="col-xl-3 col-3">
+		<p class="fw-bold">protein: @Model.MyModel.TotalProtein.ToString("00.00")</p>
+	</div>
+	<div class="col-xl-3 col-3">
+		<p class="fw-bold">sugar: @Model.MyModel.TotalSugar.ToString("00.00")</p>
+	</div>
+</div>
+
+
+
+

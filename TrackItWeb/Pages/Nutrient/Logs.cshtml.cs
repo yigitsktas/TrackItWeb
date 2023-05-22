@@ -23,7 +23,9 @@ namespace TrackItWeb.Pages.Nutrient
 
 		public async Task<IActionResult> OnGet()
 		{
-			var memberNutrients = await _apiService.GetMemberNutrientLogs(User.GetMemberID());
+			var data = await _apiService.GetMemberNutrientLogs(User.GetMemberID());
+
+			var memberNutrients = data.OrderByDescending(x => x.CreatedDate).ToList();
 
 			if (memberNutrients != null)
 			{
@@ -41,7 +43,7 @@ namespace TrackItWeb.Pages.Nutrient
 
 						totalCalorie = (nutrient.Calorie / 100) * item.ServingSize;
 
-						index.MemberNutrientID = item.NutrientID;
+						index.MemberNutrientID = item.MemberNutrientID;
 						index.NutrientName = nutrient.NutrientName;
 						index.TotalCalorie = totalCalorie;
 						index.CreatedDate = item.CreatedDate;

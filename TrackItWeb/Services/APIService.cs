@@ -527,7 +527,7 @@ namespace TrackItWeb.Services
 		public async Task<MemberMetric> GetMemberMetric(int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/MemberMetric/" + id;
+			string url = "https://localhost:7004/api/Member/GetMemberMetric/" + id;
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
 			if (responseMessage.IsSuccessStatusCode == true)
