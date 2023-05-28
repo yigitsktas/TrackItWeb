@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using TrackItWeb.DataModels;
 using TrackItWeb.Entities;
+using TrackItWeb.Helpers;
 
 namespace TrackItWeb.Services
 {
@@ -257,6 +259,33 @@ namespace TrackItWeb.Services
 			else
 			{
 				return new List<Recipe>();
+			}
+		}
+
+		public async Task<List<NAnalytics>> GetAnalytics(int id, string date, string info)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Nutrient/GetNutrientAnalytics/" + id + "/" + info + "/" + date;
+
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			if (responseMessage.IsSuccessStatusCode == true)
+			{
+				var logs = JsonConvert.DeserializeObject<List<NAnalytics>>(await responseMessage.Content.ReadAsStringAsync());
+
+				if (logs != null)
+				{
+					return logs;
+				}
+				else
+				{
+					return new List<NAnalytics>();
+				}
+			}
+			else
+			{
+				return new List<NAnalytics>();
 			}
 		}
 

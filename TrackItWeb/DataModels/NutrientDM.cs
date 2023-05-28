@@ -12,4 +12,10 @@
         public double Portions { get; set; }
         public int ServingType { get; set; }
     }
+
+	public class NAnalytics
+	{
+		public string? X { get; set; }
+		public string? Y { get; set; }
+	}
 }
