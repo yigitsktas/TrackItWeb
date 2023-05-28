@@ -66,7 +66,17 @@ namespace TrackItWeb.Services
 		public async Task<bool> CreateRecipe(string info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/CreateRecipe" + info;
+			string url = "https://localhost:7004/api/Nutrient/CreateRecipe/" + info;
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			return responseMessage.IsSuccessStatusCode;
+		}
+
+		public async Task<bool> DeleteRecipe(int id)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Nutrient/DeleteRecipe/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -103,6 +113,16 @@ namespace TrackItWeb.Services
 		{
 			var client = new HttpClient();
 			string url = "https://localhost:7004/api/Nutrient/CreateMemberNutrient/" + info + "/a";
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			return responseMessage.IsSuccessStatusCode;
+		}
+
+		public async Task<bool> DeleteMemberNutrient(int id)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Nutrient/DeleteMemberNutrient/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -282,6 +302,42 @@ namespace TrackItWeb.Services
 			return responseMessage.IsSuccessStatusCode;
 		}
 
+		public async Task<bool> DeleteMSWorkout(int id)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Workout/DeleteMSWorkout/" + id;
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			return responseMessage.IsSuccessStatusCode;
+		}
+
+		public async Task<MemberSpecificWorkout> GetMSWorkout(int id)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Workout/GetMSWorkout/" + id;
+
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			if (responseMessage.IsSuccessStatusCode == true)
+			{
+				var workout = JsonConvert.DeserializeObject<TrackItWeb.Entities.MemberSpecificWorkout>(await responseMessage.Content.ReadAsStringAsync());
+				if (workout != null)
+				{
+					return workout;
+				}
+				else
+				{
+					return new MemberSpecificWorkout();
+				}
+			}
+			else
+			{
+				return new MemberSpecificWorkout();
+			}
+		}
+
 		public async Task<Workout> GetWorkout(int id)
 		{
 			var client = new HttpClient();
@@ -391,7 +447,7 @@ namespace TrackItWeb.Services
 		public async Task<List<WorkoutType>> GetWorkoutTypes()
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetWorkouts/";
+			string url = "https://localhost:7004/api/Workout/GetWorkoutTypes/";
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -473,14 +529,30 @@ namespace TrackItWeb.Services
 
 		#region Authentication
 
-		public async Task<bool> CreateUser(string info)
+		public async Task<Member> CreateUser(string info)
 		{
 			var client = new HttpClient();
 			string url = "https://localhost:7004/api/Member/CreateUser/" + info;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
-			return responseMessage.IsSuccessStatusCode;
+			if (responseMessage.IsSuccessStatusCode == true)
+			{
+				var member = JsonConvert.DeserializeObject<Member>(await responseMessage.Content.ReadAsStringAsync());
+
+				if (member != null)
+				{
+					return member;
+				}
+				else 
+				{ 
+					return new Member(); 
+				}
+			}
+			else
+			{
+				return new Member();
+			}
 		}
 
 		public async Task<bool> Login(string username, string password)

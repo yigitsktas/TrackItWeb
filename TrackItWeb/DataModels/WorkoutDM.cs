@@ -24,4 +24,10 @@
 		public string? Description { get; set; }
 		public string? Link { get; set; }
 	}
+
+	public class WAnalytics
+	{
+		public string? X { get; set; }
+		public string? Y { get; set; }
+	}
 }

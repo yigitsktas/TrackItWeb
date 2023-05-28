@@ -8,8 +8,8 @@ using TrackItWeb.Services;
 
 namespace TrackItWeb.Pages.Authentication
 {
-    public class RegisterModel : PageModel
-    {
+	public class RegisterModel : PageModel
+	{
 		private readonly APIService _apiService;
 
 		public RegisterModel(APIService apiService)
@@ -18,42 +18,59 @@ namespace TrackItWeb.Pages.Authentication
 		}
 
 		public IActionResult OnGet()
-        {
-            return Page();
-        }
+		{
+			return Page();
+		}
 
-        public async Task<IActionResult> OnPost(string email, string username, string password)
-        {
-            if (username != null || password != null || email != null)
-            {
-                TrackItWeb.Entities.Member member = new();
+		public async Task<IActionResult> OnPost(string email, string username, string password)
+		{
+			if (username != null || password != null || email != null)
+			{
+				TrackItWeb.Entities.Member member = new();
 
-                member.Username = username;
-                member.Password = password;
-                member.EMail = email;
-                member.Gender = 0;
-                member.BirthYear = DateTime.Now;
-                member.UpdatedDate = DateTime.Now;
-                member.CreatedDate = DateTime.Now;
+				member.Username = username;
+				member.Password = password;
+				member.EMail = email;
+				member.Gender = 0;
+				member.BirthYear = DateTime.Now;
+				member.UpdatedDate = DateTime.Now;
+				member.CreatedDate = DateTime.Now;
 
-                var info = JsonConvert.SerializeObject(member);
+				var info = JsonConvert.SerializeObject(member);
 
-                var isTrue = await _apiService.CreateUser(info);
+				var rMember = await _apiService.CreateUser(info);
 
-                if (isTrue)
-                { 
-                    return Redirect("/Home/Index");
-                }
-                else
-                {
-                    return Redirect("/Error");
-                }
-            }
+				if (rMember != null)
+				{
+					var scheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
-            else
-            {
-                return Redirect("/Error");
-            }
-        }
-    }
+					var MyClaim = new ClaimsPrincipal(
+					new ClaimsIdentity(
+					new List<Claim>
+										{
+										new Claim(ClaimTypes.Name, rMember.Username.ToString()),
+										new Claim(ClaimTypes.Sid, rMember.MemberID.ToString()),
+										},
+									scheme
+										)
+									);
+					var cookieOptions = new CookieOptions();
+					cookieOptions.Expires = DateTime.Now.AddDays(1);
+
+					await HttpContext.SignInAsync(scheme, MyClaim);
+
+					return Redirect("/Home/Index");
+				}
+				else
+				{
+					return Redirect("/Error");
+				}
+			}
+
+			else
+			{
+				return Redirect("/Error");
+			}
+		}
+	}
 }

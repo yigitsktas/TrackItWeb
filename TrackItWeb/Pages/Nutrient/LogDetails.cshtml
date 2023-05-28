@@ -12,48 +12,58 @@
 	</ol>
 </nav>
 
-<div class="row">
-	<div class="col-xl-9 col-9">
-		<h4 class="fw-bold">@Model.MyModel.NutrientName // @Model.MyModel.Brand</h4>
+<form method="post">
+	<div class="row">
+		<div class="col-xl-9 col-9">
+			<input type="hidden" value="@Model.MyModel.MemberNutrientID" name="id">
+			<h4 class="fw-bold">@Model.MyModel.NutrientName // @Model.MyModel.Brand</h4>
+		</div>
+		<div class="col-xl-3 col-3">
+			<p style="font-size: 17px;" class="fw-bold">@Model.MyModel.CreatedDate.ToString("dd/MM/yyyy")</p>
+		</div>
 	</div>
-	<div class="col-xl-3 col-3">
-		<p style="font-size: 17px;" class="fw-bold">@Model.MyModel.CreatedDate.ToString("dd/MM/yyyy")</p>
+	<div class="row">
+		@{
+			string type = "";
+		}
+		@if (Model.MyModel.NutrientType == 1) { type = "ml"; }
+		else { type = "gr"; }
+		<div class="col-xl-3 col-8">
+			<div class="row">
+				<div class="col-3">
+					<p class="fw-bold">portions:</p>
+				</div>
+				<div class="col-3">
+					<input type="number" class="form-control border-2 rounded-0 bg-transparent text-dark fw-bold" style="width: 70px; height: 25px;" asp-for="@Model.MyModel.ServingSize" />
+				</div>
+				<div class="col-3">
+					<p class="fw-bold">@type</p>
+				</div>
+			</div>
+		</div>
 	</div>
-</div>
 
-<div class="row">
-	@{string type = "";}
-	@if (Model.MyModel.NutrientType == 1)
-	{
-		type = "ml";
-	}
-	else
-	{
-		type = "gr";
-	}
-	<div class="col-xl-3 col-6">
-		<p class="fw-bold">portions: @Model.MyModel.ServingSize @type</p>
+	<div class="row mt-3" style="font-size: 16px">
+		<div class="col-xl-12 col-12">
+			<p class="fw-bold">calorie: @Model.MyModel.Calorie</p>
+		</div>
+		<div class="col-xl-3 col-3">
+			<p class="fw-bold">carb: @Model.MyModel.TotalCarb.ToString("00.00")</p>
+		</div>
+		<div class="col-xl-3 col-3">
+			<p class="fw-bold">fat: @Model.MyModel.TotalFat.ToString("00.00")</p>
+		</div>
+		<div class="col-xl-3 col-3">
+			<p class="fw-bold">protein: @Model.MyModel.TotalProtein.ToString("00.00")</p>
+		</div>
+		<div class="col-xl-3 col-3">
+			<p class="fw-bold">sugar: @Model.MyModel.TotalSugar.ToString("00.00")</p>
+		</div>
 	</div>
-</div>
-
-<div class="row">
-	<div class="col-xl-3 col-3">
-		<p class="fw-bold">calorie: @Model.MyModel.Calorie</p>
+	<div class="col-xl-12 col-12 d-flex justify-content-center mt-3">
+		<button class="btn btn-dark btn-md rounded-0 float-end" type="submit">update.</button>
 	</div>
-	<div class="col-xl-3 col-3">
-		<p class="fw-bold">carb: @Model.MyModel.TotalCarb.ToString("00.00")</p>
-	</div>
-	<div class="col-xl-3 col-3">
-		<p class="fw-bold">fat: @Model.MyModel.TotalFat.ToString("00.00")</p>
-	</div>
-	<div class="col-xl-3 col-3">
-		<p class="fw-bold">protein: @Model.MyModel.TotalProtein.ToString("00.00")</p>
-	</div>
-	<div class="col-xl-3 col-3">
-		<p class="fw-bold">sugar: @Model.MyModel.TotalSugar.ToString("00.00")</p>
-	</div>
-</div>
-
+</form>
 
 
 

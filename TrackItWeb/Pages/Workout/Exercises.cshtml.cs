@@ -45,6 +45,14 @@ namespace TrackItWeb.Pages.Workout
 				return Redirect("/Error");
 			}
 		}
+
+		public async Task<IActionResult> OnPostDelete(int id)
+		{
+			var isDeleted = await _apiService.DeleteMSWorkout(id);
+
+			if (isDeleted) { return RedirectToPage("/Workout/Exercises"); }
+			else { return RedirectToPage("/Error"); }
+		}
 	}
 
 	public class MSWorkoutDM

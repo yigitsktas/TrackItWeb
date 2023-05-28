@@ -24,6 +24,7 @@ namespace TrackItWeb.Pages.Nutrient
 				IndexVM indexVM = new();
 
 				indexVM.Notes = memberNutrient.Notes;
+				indexVM.MemberNutrientID = memberNutrient.MemberNutrientID;
 				indexVM.ServingSize = memberNutrient.ServingSize;
 				indexVM.CreatedDate = memberNutrient.CreatedDate;
 
@@ -45,11 +46,13 @@ namespace TrackItWeb.Pages.Nutrient
 
 				return Page();
 			}
+
 			else { return RedirectToPage("/Error"); }
         }
 
 		public class IndexVM
 		{
+			public int MemberNutrientID { get; set; }
 			public double ServingSize { get; set; }
 			public string? Notes { get; set; }
 			public string? NutrientName { get; set; }

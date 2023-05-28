@@ -1,5 +1,5 @@
 ﻿@page
-@model TrackItWeb.Pages.Workout.WorkoutDetailsModel
+@model TrackItWeb.Pages.Workout.MSWorkoutDetailsModel
 @{
 	ViewData["Title"] = "details.";
 }
@@ -16,20 +16,10 @@
 <h2>muscle group: @Model.Index_VM.MuscleGroup.ToLower(). // </h2>
 <h2>workout type: @Model.Index_VM.WorkoutType.ToLower()</h2>
 
-<h5 class="mt-3">difficulty.</h5>
-<div class="progress mb-3">
-	@{
-		int level = 0;
-
-		level = 20 * Model.Index_VM.Difficulty;
-	}
-	<div class="progress-bar bg-dark" style="width: @level%" aria-valuenow="@Model.Index_VM.Difficulty">
-	</div>
-</div>
 <p style="font-size:20px"><b>description:</b> @Model.Index_VM.Description</p>
 <div style="margin-top: 40px"></div>
 <div class="float-end mt-3">
-	<h4>created by: TRACKIT</h4>
+	<h4>created by: you</h4>
 </div>
 <div class="float-start mt-3">
 	<p class="fw-bold">video</p>

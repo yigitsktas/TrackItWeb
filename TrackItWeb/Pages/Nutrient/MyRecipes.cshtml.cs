@@ -32,5 +32,13 @@ namespace TrackItWeb.Pages.Nutrient
 				return RedirectToPage("/Error");
 			}
         }
-    }
+
+		public async Task<IActionResult> OnPostDelete(int id)
+		{
+			var isDeleted = await _apiService.DeleteRecipe(id);
+
+			if (isDeleted) { return RedirectToPage("/Nutrient/MyRecipes"); }
+			else { return RedirectToPage("/Error"); }
+		}
+	}
 }

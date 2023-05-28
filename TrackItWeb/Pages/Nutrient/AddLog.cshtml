@@ -16,7 +16,7 @@
 	<div class="row mt-3">
 		<div class="col-xl-3 col-sm-6 col-4">
 			<label class="form-label text-dark float-start fw-bold" for="ddl">nutrient.</label>
-			<select id="ddl" class="form-control-md border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-items="Model.Nutrients" asp-for="addLogDM.NutrientID">
+			<select id="ddl" class="form-control-md border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-items="Model.Nutrients" asp-for="addLogDM.NutrientID" required>
 			</select>
 		</div>
 		<div class="col-xl-3 col-sm-6 col-3">
@@ -33,11 +33,11 @@
 	<div class="row mt-3">
 		<div class="col-xl-6 col-6 mt-1">
 			<label class="form-label text-dark float-start fw-bold" for="typeEmailX">portions (gr / ml).</label>
-			<input type="text" id="typeEmailX" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="addLogDM.Portions" />
+			<input type="number" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="addLogDM.Portions" required/>
 		</div>
 		<div class="col-xl-6 col-12 mt-1">
 			<label class="form-label text-dark float-start fw-bold" for="typeEmailX">notes.</label>
-			<textarea type="text" id="typeEmailX" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="addLogDM.Notes"></textarea>
+			<textarea type="text" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="addLogDM.Notes"></textarea>
 		</div>
 	</div>
 	<div class="mt-5 d-flex justify-content-center">
