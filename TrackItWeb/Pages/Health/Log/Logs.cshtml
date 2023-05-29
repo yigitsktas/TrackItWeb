@@ -1,0 +1,56 @@
+﻿@page
+@model TrackItWeb.Pages.Health.Log.LogsModel
+@{
+	ViewData["Title"] = "logs.";
+}
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item" aria-current="page"><a class="text-decoration-none text-dark" href="/Nutrient/Index">health</a></li>
+		<li class="breadcrumb-item active" aria-current="page">logs</li>
+	</ol>
+</nav>
+
+<div class="row">
+	<div class="col-xl-8 col-6">
+		<h2 class="fw-bold">logs.</h2>
+	</div>
+	<div class="col-xl-4 col-6">
+		<a class="btn btn-dark btn-sm rounded-0 float-end"  href="/Health/Log/AddLog">create new log.</a>
+	</div>
+</div>
+
+<form method="post">
+	<div class="row p-2">
+		@foreach (var item in Model.Index)
+		{
+			<div class="col-xl-3 col-sm-4 col-6 mt-3">
+				<div class="card border-2 border-dark" style="width: 16rem;">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-9">
+								<h5 class="card-title "><a class="text-dark" href="/Nutrient/LogDetails?id=@item.MemberNutrientID">@item.NutrientName.ToLower()</a></h5>
+							</div>
+							<div class="col-3 mb-2">
+								<button class="btn btn-outline-danger btn-sm border-0 rounded-0 float-end" asp-route-id="@item.MemberNutrientID" type="submit" data-toggle="tooltip" onclick="return confirm('are you sure?');" data-original-title="Delete" asp-page-handler="Delete">X</button>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-12">
+								<p class="float-start" style="font-size:13px">total calorie: @item.TotalCalorie cal.</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-8 mt-2">
+								<p class="card-text fw-bold">created date: @item.CreatedDate.ToShortDateString()</p>
+							</div>
+								<div class="col-4" style="padding-left: 18px">
+								<a class="btn btn-outline-dark border-2 btn-sm m-3 rounded-0 fw-bold" asp-route-id="@item.MemberNutrientID" asp-page="/Health/Log/LogDetails">➔</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</form>
