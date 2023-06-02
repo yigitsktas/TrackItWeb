@@ -6,7 +6,7 @@
 
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item" aria-current="page"><a class="text-decoration-none text-dark" href="/Nutrient/Index">health</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="text-decoration-none text-dark" href="/Health/Index">health</a></li>
 		<li class="breadcrumb-item active" aria-current="page">logs</li>
 	</ol>
 </nav>
@@ -19,8 +19,38 @@
 		<a class="btn btn-dark btn-sm rounded-0 float-end"  href="/Health/Log/AddLog">create new log.</a>
 	</div>
 </div>
-
 <form method="post">
+		<div class="row">
+			<div class="col-xl-12 col-12">
+				<p>
+					<button class="btn btn-transparent btn-sm rounded-0 mt-3" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+						<img style="height: 10px; width:10px; margin-bottom:3px;" src="~/filter.png" /><span class="fw-bold" style="font-size:14px"> Filters</span>
+					</button>
+				</p>
+				<div class="collapse" id="collapseExample">
+					<div class="card card-body border-0">
+						<div class="row float-start">
+							<div class="col-xl-4 col-4">
+								<label class="form-label text-dark float-start fw-bold">nutrient name.</label>
+								<input type="text" class="form-control form-control-sm border-2 rounded-0 bg-transparent text-dark fw-bold" name="username" />
+							</div>
+							<div class="col-xl-1 col-3">
+								<label class="form-label text-dark float-start fw-bold">order by.</label>
+								<select id="" style="width: 100px; height:29px" class="form-control-sm border border-2 rounded-0 bg-transparent text-dark fw-bold">
+									<option class="text-dark" value="date-asc" selected>created date ascending</option>
+									<option class="text-dark" value="date-desc">created date ascending</option>
+									<option class="text-dark" value="cal-asc">calorie ascending</option>
+									<option class="text-dark" value="cal-desc">calorie date ascending</option>
+								</select>
+							</div>
+							<div class="col-xl-5 col-5" style="margin-top: 28px">
+								<button class="btn btn-dark btn-sm rounded-0 float-start" type="submit">filter.</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	<div class="row p-2">
 		@foreach (var item in Model.Index)
 		{

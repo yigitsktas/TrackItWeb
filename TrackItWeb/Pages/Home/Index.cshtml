@@ -31,7 +31,7 @@
 				<ul class="list-group list-group-flush fw-bold">
 					@foreach (var item in Model.MyModel.Workouts)
 					{
-						<li class="list-group-item">@item.WorkoutName.ToLower()<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Workout/WDetails?id=@item.WorkoutID">➔</a></li>
+						<li class="list-group-item">@item.WorkoutName.ToLower()<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Fitness/Weekly/Details?id=@item.WorkoutID">➔</a></li>
 					}
 				</ul>
 			</div>
@@ -44,7 +44,7 @@
 				<ul class="list-group list-group-flush fw-bold">
 					@foreach (var item in Model.MyModel.Recipes)
 					{
-						<li class="list-group-item">@item.Summary.ToLower()<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Nutrient/RDetails?id=@item.RecipeID">➔</a></li>
+						<li class="list-group-item">@item.Summary.ToLower()<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" href="/Health/Recipe/Details?id=@item.RecipeID">➔</a></li>
 					}
 				</ul>
 			</div>
