@@ -18,7 +18,8 @@ namespace TrackItWeb.Pages.Member
 			_apiService = apiService;
 		}
 
-		public Profile_DM? Index_VM { get; set; }
+        [BindProperty]
+        public Profile_DM? Index_VM { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
@@ -36,6 +37,7 @@ namespace TrackItWeb.Pages.Member
 
             if (memberMetric != null) 
             { 
+                model.MemberMetricID = memberMetric.MemberMetricID;
                 model.Height = memberMetric.Height;
                 model.Weight = memberMetric.Weight;
                 model.BMI = memberMetric.BMI;
@@ -46,15 +48,26 @@ namespace TrackItWeb.Pages.Member
 			return Page();
 		}
 
-        public async Task<IActionResult> OnPostUpdate()
+		public async Task<IActionResult> OnPostUpdate()
         {
-            return Page();
-        }
+            var data = JsonConvert.SerializeObject(Index_VM);
 
+            var isOk = await _apiService.CreateMemberMetric(data);
+
+            if (isOk)
+            {
+                return Page();
+            }
+            else
+            {
+                return RedirectToPage("/Error");
+            }
+        }
     }
 
     public class Profile_DM
     {
+        public int MemberMetricID { get; set; }
         public string? Username { get; set; }
         public string? EMail { get; set; }
         public double Height { get; set; }

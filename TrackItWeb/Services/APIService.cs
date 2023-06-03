@@ -183,6 +183,37 @@ namespace TrackItWeb.Services
 			}
 		}
 
+		public async Task<List<MemberNutrient>> GetMemberNutrientFilteredLogs(int id, string name, string orderBy)
+		{
+			if (name == null)
+			{
+				name = Guid.NewGuid().ToString();
+			}
+
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Nutrient/GetMemberNutrientFilteredLogs/"+ name + "/" + orderBy + "/" + id;
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			if (responseMessage.IsSuccessStatusCode == true)
+			{
+				var memberNutrients = JsonConvert.DeserializeObject<List<MemberNutrient>>(await responseMessage.Content.ReadAsStringAsync());
+
+				if (memberNutrients != null)
+				{
+					return memberNutrients;
+				}
+				else
+				{
+					return new List<MemberNutrient>();
+				}
+			}
+			else
+			{
+				return new List<MemberNutrient>();
+			}
+		}
+
 		public async Task<Nutrient> GetNutrientByID(int id)
 		{
 			var client = new HttpClient();
@@ -650,6 +681,14 @@ namespace TrackItWeb.Services
 			}
 		}
 
+		public async Task<bool> CreateMemberMetric(string info)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Member/CreateMemberMetric/" + info;
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			return responseMessage.IsSuccessStatusCode;
+		}
 		#endregion
 
 

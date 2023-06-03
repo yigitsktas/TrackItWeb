@@ -21,11 +21,21 @@ namespace TrackItWeb.Pages.Health.Log
 
 		public List<IndexVM>? Index { get; set; }
 
-		public async Task<IActionResult> OnGet()
+		public async Task<IActionResult> OnGet(string searchString, string orderBy)
 		{
-			var data = await _apiService.GetMemberNutrientLogs(User.GetMemberID());
+			var data = new List<MemberNutrient>();
 
-			var memberNutrients = data.OrderByDescending(x => x.CreatedDate).ToList();
+			if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(orderBy))
+			{
+				data = await _apiService.GetMemberNutrientFilteredLogs(User.GetMemberID(), searchString, orderBy);
+			}
+			else
+			{
+				var data1 = await _apiService.GetMemberNutrientLogs(User.GetMemberID());
+				data = data1.OrderByDescending(x => x.CreatedDate).ToList();
+			}
+
+			var memberNutrients = data.ToList();
 
 			if (memberNutrients != null)
 			{
