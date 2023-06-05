@@ -1,21 +1,26 @@
 ﻿@page
 @model TrackItWeb.Pages.Member.CoachModel
 @{
-	ViewData["Title"] = "my coach.";
+	ViewData["Title"] = "ai coach.";
+	@Html.AntiForgeryToken()
 }
-<div class="container-fluid p-3">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item active" aria-current="page">ai coach</li>
+		</ol>
+	</nav>
 
+<div class="container-fluid p-3">
 	<div class="row">
 		<div class="col-9">
 			<h1 class="fw-bold">AI coach</h1>
 		</div>
 		<div class="col-3 mt-1">
-			@*		<a class="btn btn-dark btn-sm rounded-0 float-end" onclick="history.back();">go back.</a>
-			*@
+			<a class="btn btn-outline-dark border-1 btn-sm rounded-0 fw-bold float-end" href="/Member/CoachLogs">go to logs.</a>
 		</div>
 	</div>
 	<form method="post">
-		<input type="text" id="prmpt" class="form-control form-control-lg border-2 rounded-0 bg-transparent text-dark fw-bold" name="prompt" />
+		<input type="text" id="prmpt" class="form-control form-control-lg border-2 rounded-0 bg-transparent text-dark fw-bold mt-2" name="prompt" />
 		<div class="row">
 			<div class="col-xl-12 col-12 d-flex justify-content-center">
 				<button class="btn btn-dark btn-md rounded-0 d-flex justify-content-center mt-3" type="submit" onclick="showDiv()">get answer.</button>
@@ -28,17 +33,15 @@
 		</div>
 	</form>
 
-	<form>
-		@if (!string.IsNullOrEmpty(Model.Answer))
-		{
-			<h2 class="fw-bold  mt-3">answer.</h2>
-			<p class="fw-bold mt-2">@Html.Raw(Model.Answer)</p>
-			<div class="col-xl-12 text-center">
-				<button class="btn btn-outline-dark border-2 btn-sm m-3 rounded-0 fw-bold" href="/Home/Index">add log.</button>
-				<a class="btn btn-outline-dark border-2 btn-sm m-3 rounded-0 fw-bold" href="/Home/Index">go back.</a>
-			</div>
-		}
-	</form>
+	@if (!string.IsNullOrEmpty(Model.Answer))
+	{
+		<h2 class="fw-bold  mt-3">answer.</h2>
+		<p class="fw-bold mt-2" id="answer" name="result">@Html.Raw(Model.Answer)</p>
+		<div class="col-xl-12 text-center">
+			<button class="btn btn-outline-dark border-2 btn-sm m-3 rounded-0 fw-bold" id="addLog" type="submit">add log.</button>
+			<a class="btn btn-outline-dark border-2 btn-sm m-3 rounded-0 fw-bold" href="/Home/Index">go back.</a>
+		</div>
+	}
 </div>
 
 <script>
@@ -46,4 +49,24 @@
 		let p = document.getElementById('spin');
 		p.removeAttribute("hidden");
 	}
+</script>
+
+<script>
+$("#addLog").on("click", function () {
+
+	var answer = $("#answer").text();
+
+	$.ajax(
+		{
+			type: "POST",
+			url: "?handler=AddLog",
+			data: { result: answer },
+			contentType: 'application/x-www-form-urlencoded',
+			dataType: "json",
+			headers:
+			{
+				"RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+			},
+		});
+});
 </script>

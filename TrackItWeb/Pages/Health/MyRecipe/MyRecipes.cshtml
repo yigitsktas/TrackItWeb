@@ -51,10 +51,10 @@
 					<div class="card-body">
 						<div class="row">
 							<div class="col-xl-9 col-9">
-								<h5 class="card-title"><a class="text-dark" href="/Health/MyRecipe/Details?id=@item.RecipeID">@item.Summary.ToLower()</a></h5>
+								<h5 class="card-title"><a class="text-dark" href="/Health/MyRecipe/Details?guid=@item.GUID">@item.Summary.ToLower()</a></h5>
 							</div>
 							<div class="col-xl-3 col-3">
-								<button class="btn btn-outline-danger btn-sm border-0 rounded-0 float-end" asp-route-id="@item.RecipeID" type="submit" data-toggle="tooltip" onclick="return confirm('are you sure?');" data-original-title="Delete" asp-page-handler="Delete">X</button>
+								<button class="btn btn-outline-danger btn-sm border-0 rounded-0 float-end" asp-route-guid="@item.GUID" type="submit" data-toggle="tooltip" onclick="return confirm('are you sure?');" data-original-title="Delete" asp-page-handler="Delete">X</button>
 							</div>
 						</div>
 						<div class="row mt-3 d-flex justify-content-center">
@@ -73,7 +73,7 @@
 								<p class="card-text fw-bold">created by: you</p>
 							</div>
 							<div class="col-4">
-								<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" asp-route-id="@item.RecipeID" asp-page="/Health/MyRecipe/Details">➔</a>
+								<a class="btn btn-outline-dark border-2 btn-sm rounded-0 fw-bold float-end" asp-route-guid="@item.GUID" asp-page="/Health/MyRecipe/Details">➔</a>
 							</div>
 						</div>
 					</div>

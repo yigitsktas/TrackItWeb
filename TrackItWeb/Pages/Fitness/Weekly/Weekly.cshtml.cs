@@ -32,6 +32,7 @@ namespace TrackItWeb.Pages.Fitness.Weekly
 					Weekly_DM workout = new();
 
 					workout.WorkoutID = item.WorkoutID;
+					workout.GUID = item.GUID;
 					workout.WorkoutName = item.WorkoutName;
 					workout.Difficulty = item.Difficulty;
 
@@ -52,6 +53,7 @@ namespace TrackItWeb.Pages.Fitness.Weekly
 	public class Weekly_DM
 	{
 		public int WorkoutID { get; set; }
+		public Guid GUID { get; set; }
 		public string? WorkoutName { get; set; }
 		public int Difficulty { get; set; }
 	}

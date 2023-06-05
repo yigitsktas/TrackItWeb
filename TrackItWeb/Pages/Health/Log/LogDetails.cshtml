@@ -1,7 +1,7 @@
 ﻿@page
 @model TrackItWeb.Pages.Health.Log.LogDetailsModel
 @{
-	ViewData["Title"] = "nutrient log details.";
+	ViewData["Title"] = "nutrient log details. // " + Model.MyModel.Calorie + " cal";
 }
 
 <nav aria-label="breadcrumb">
@@ -12,6 +12,7 @@
 	</ol>
 </nav>
 
+<div class="container"></div>
 <form method="post">
 	<div class="row">
 		<div class="col-xl-9 col-9">

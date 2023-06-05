@@ -19,11 +19,11 @@ namespace TrackItWeb.Pages.Health.MyRecipe
 
         public Recipe_Details_DM? Index_VM { get; set; }
 
-        public async Task<IActionResult> OnGet(int id)
+        public async Task<IActionResult> OnGet(Guid guid)
         {
             Recipe_Details_DM model = new();
 
-            var recipe = await _apiService.GetRecipe(id);
+            var recipe = await _apiService.GetRecipe(guid);
 
             if (recipe != null)
             {

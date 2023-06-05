@@ -54,6 +54,7 @@ namespace TrackItWeb.Pages.Health.Log
 						totalCalorie = (nutrient.Calorie / 100) * item.ServingSize;
 
 						index.MemberNutrientID = item.MemberNutrientID;
+						index.GUID = item.GUID;
 						index.NutrientName = nutrient.NutrientName;
 						index.TotalCalorie = totalCalorie;
 						index.CreatedDate = item.CreatedDate;
@@ -72,20 +73,22 @@ namespace TrackItWeb.Pages.Health.Log
 			}
 		}
 
-		public async Task<IActionResult> OnPostDelete(int id)
+		public async Task<IActionResult> OnPostDelete(Guid guid)
 		{
-			var isDeleted = await _apiService.DeleteMemberNutrient(id);
+			var isDeleted = await _apiService.DeleteMemberNutrient(guid);
 
 			if (isDeleted){ return RedirectToPage("/Health/Log/Logs"); }
 			else{ return RedirectToPage("/Error"); }
 		}
 	}
+	
+	public class IndexVM
+	{
+		public int MemberNutrientID { get; set; }
+		public Guid GUID { get; set; }
+		public string? NutrientName { get; set; }
+		public DateTime CreatedDate { get; set; }
+		public double TotalCalorie { get; set; }
+	}
 }
 
-public class IndexVM
-{
-	public int MemberNutrientID { get; set; }
-	public string? NutrientName { get; set; }
-	public DateTime CreatedDate { get; set; }
-	public double TotalCalorie { get; set; }
-}

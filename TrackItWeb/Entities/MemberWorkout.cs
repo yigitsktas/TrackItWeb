@@ -11,8 +11,9 @@ namespace TrackItWeb.Entities
     public class MemberWorkoutLog
     {
         public int MemberWorkoutID { get; set; }
-        public int MemberID { get; set; }
-        public int MemberWorkoutName { get; set; }
+		public Guid GUID { get; set; }
+		public int MemberID { get; set; }
+        public string? MemberWorkoutName { get; set; }
         public string? Notes { get; set; }
         public bool isDone { get; set; }
         public DateTime CreatedDate { get; set; }

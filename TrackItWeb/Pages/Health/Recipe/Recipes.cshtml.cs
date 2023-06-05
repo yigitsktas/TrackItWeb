@@ -32,6 +32,7 @@ namespace TrackItWeb.Pages.Health.Recipe
                     Recipes_DM myRecipe = new Recipes_DM();
 
                     myRecipe.RecipeID = item.RecipeID;
+                    myRecipe.GUID = item.GUID;
                     myRecipe.Title = item.Summary;
                     myRecipe.Directions = item.Directions;
                     myRecipe.Serve = item.Serve;
@@ -65,6 +66,7 @@ namespace TrackItWeb.Pages.Health.Recipe
         public class Recipes_DM
         {
             public int RecipeID { get; set; }
+            public Guid GUID { get; set; }
             public string? Title { get; set; }
             public string? Directions { get; set; }
             public int Serve { get; set; }

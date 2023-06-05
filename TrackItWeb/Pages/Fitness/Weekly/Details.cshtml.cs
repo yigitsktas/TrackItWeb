@@ -20,11 +20,11 @@ namespace TrackItWeb.Pages.Fitness.Weekly
 
 		public WDetail_DM Index_VM { get; set; }
 
-		public async Task<IActionResult> OnGet(int id)
+		public async Task<IActionResult> OnGet(Guid guid)
 		{
 			WDetail_DM model = new();
 
-			var workout = await _apiService.GetWorkout(id);
+			var workout = await _apiService.GetWorkout(guid);
 
 			if (workout != null)
 			{

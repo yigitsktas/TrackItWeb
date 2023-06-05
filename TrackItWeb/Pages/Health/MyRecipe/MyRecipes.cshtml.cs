@@ -35,9 +35,9 @@ namespace TrackItWeb.Pages.Health.MyRecipe
 			}
         }
 
-		public async Task<IActionResult> OnPostDelete(int id)
+		public async Task<IActionResult> OnPostDelete(Guid guid)
 		{
-			var isDeleted = await _apiService.DeleteRecipe(id);
+			var isDeleted = await _apiService.DeleteRecipe(guid);
 
 			if (isDeleted) { return RedirectToPage("/Health/MyRecipe/MyRecipes"); }
 			else { return RedirectToPage("/Error"); }

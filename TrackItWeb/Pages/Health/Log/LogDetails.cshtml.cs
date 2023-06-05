@@ -17,9 +17,9 @@ namespace TrackItWeb.Pages.Health.Log
 
 		public IndexVM MyModel { get; set; }
 
-		public async Task<IActionResult> OnGet(int id)
+		public async Task<IActionResult> OnGet(Guid guid)
         {
-			var memberNutrient = await _apiService.GetMemberNutrientLog(id);
+			var memberNutrient = await _apiService.GetMemberNutrientLog(guid);
 
 			if (memberNutrient != null)
 			{

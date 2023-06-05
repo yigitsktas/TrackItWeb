@@ -1,0 +1,42 @@
+﻿@page
+@model TrackItWeb.Pages.Member.CoachLogsModel
+@{
+	ViewData["Title"] = "ai coach logs.";
+}
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item" aria-current="page"><a class="text-decoration-none text-dark" href="/Member/Coach">ai coach</a></li>
+		<li class="breadcrumb-item active" aria-current="page">logs</li>
+	</ol>
+</nav>
+
+<form method="post">
+	<div class="row p-2">
+		@foreach (var item in Model.chatLogs)
+		{
+			<div class="col-xl-3 col-sm-4 col-6 mt-3">
+				<div class="card border-2 border-dark" style="width: 16rem;">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-9">
+								<h5 class="card-title "><a class="text-dark" href="/Member/CoachLogDetails?guid=@item.GUID">@item.Prompt.ToLower()</a></h5>
+							</div>
+							<div class="col-3 mb-2">
+								<button class="btn btn-outline-danger btn-sm border-0 rounded-0 float-end" asp-route-guid="@item.GUID" type="submit" data-toggle="tooltip" onclick="return confirm('are you sure?');" data-original-title="Delete" asp-page-handler="Delete">X</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-8 mt-2">
+								<p class="card-text fw-bold">created date: @item.CreatedDate.ToShortDateString()</p>
+							</div>
+							<div class="col-4" style="padding-left: 18px">
+								<a class="btn btn-outline-dark border-2 btn-sm m-3 rounded-0 fw-bold" asp-route-guid="@item.GUID" asp-page="/Member/CoachLogDetails">➔</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</form>

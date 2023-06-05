@@ -11,7 +11,8 @@ namespace TrackItWeb.Entities
     public class Recipe
     {
         public int RecipeID { get; set; }
-        public int MemberID { get; set; }
+		public Guid GUID { get; set; }
+		public int MemberID { get; set; }
         public string? Summary { get; set; }
         public string? Directions { get; set; }
         public int Serve { get; set; }

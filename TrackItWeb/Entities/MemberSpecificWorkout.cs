@@ -11,7 +11,8 @@ namespace TrackItWeb.Entities
     public class MemberSpecificWorkout
     {
         public int MemberSpecificWorkoutID { get; set; }
-        public int MuscleGroupID { get; set; }
+		public Guid GUID { get; set; }
+		public int MuscleGroupID { get; set; }
         public int WorkoutTypeID { get; set; }
         public int MemberID { get; set; }
         public string? WorkoutName { get; set; }

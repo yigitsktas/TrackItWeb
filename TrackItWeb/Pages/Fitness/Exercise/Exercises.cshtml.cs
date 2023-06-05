@@ -34,6 +34,7 @@ namespace TrackItWeb.Pages.Fitness.Exercise
 					MSWorkoutDM workout = new();
 
 					workout.MSWorkoutID = item.MemberSpecificWorkoutID;
+					workout.GUID = item.GUID;
 					workout.WorkoutName = item.WorkoutName;
 
 					model.Add(workout);
@@ -49,9 +50,9 @@ namespace TrackItWeb.Pages.Fitness.Exercise
 			}
 		}
 
-		public async Task<IActionResult> OnPostDelete(int id)
+		public async Task<IActionResult> OnPostDelete(Guid guid)
 		{
-			var isDeleted = await _apiService.DeleteMSWorkout(id);
+			var isDeleted = await _apiService.DeleteMSWorkout(guid);
 
 			if (isDeleted) { return RedirectToPage("/Fitness/Exercise/Exercises"); }
 			else { return RedirectToPage("/Error"); }
@@ -61,6 +62,7 @@ namespace TrackItWeb.Pages.Fitness.Exercise
 	public class MSWorkoutDM
 	{
 		public int MSWorkoutID { get; set; }
+		public Guid GUID { get; set; }
 		public string? WorkoutName { get; set; }
 	}
 }

@@ -1,0 +1,18 @@
+﻿@page
+@model TrackItWeb.Pages.Member.CoachLogDetailsModel
+@{
+	ViewData["Title"] = "ai coach log details.";
+}
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item" aria-current="page"><a class="text-decoration-none text-dark" href="/Member/Coach">ai coach</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="text-decoration-none text-dark" href="/Member/CoachLogs">ai coach logs</a></li>
+		<li class="breadcrumb-item active" aria-current="page">@Model.MyModel.Prompt</li>
+	</ol>
+</nav>
+
+<h2>prompt: @Model.MyModel.Prompt // </h2>
+<h5>created date: @Model.MyModel.CreatedDate.ToShortDateString()</h5>
+<h3> </h3><br>
+<h4>answer: @Model.MyModel.Answer </h4>
