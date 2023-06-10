@@ -54,13 +54,13 @@ namespace TrackItWeb.Pages.Fitness.Log
 			}
 		}
 
-		//public async Task<IActionResult> OnPostDelete(int id)
-		//{
-		//	var isDeleted = await _apiService.DeleteMemberNutrient(id);
+		public async Task<IActionResult> OnPostDelete(Guid guid)
+		{
+			var isDeleted = await _apiService.DeleteMWorkoutLog(guid);
 
-		//	if (isDeleted) { return RedirectToPage("/Health/Log/Logs"); }
-		//	else { return RedirectToPage("/Error"); }
-		//}
+			if (isDeleted) { return RedirectToPage("/Fitness/Log/Logs"); }
+			else { return RedirectToPage("/Error"); }
+		}
 	}
 	public class IndexVM
 	{

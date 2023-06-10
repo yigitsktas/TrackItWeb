@@ -67,12 +67,12 @@ namespace TrackItWeb.Services
 			}
 		}
 
-		public async Task<bool> CreateRecipe(string info)
+		public async Task<bool> CreateRecipe(StringContent info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/CreateRecipe/" + info;
+			string url = "https://localhost:7004/api/Nutrient/CreateRecipe/";
 			client.BaseAddress = new Uri(url);
-			HttpResponseMessage responseMessage = await client.GetAsync(url);
+			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
 
 			return responseMessage.IsSuccessStatusCode;
 		}
@@ -586,7 +586,7 @@ namespace TrackItWeb.Services
 			}
 		}
 
-		public async Task<int> CreateMWorkoutLog(string name, string notes, int id)
+		public async Task<string> CreateMWorkoutLog(string name, string notes, int id)
 		{
 			var client = new HttpClient();
 			string url = "https://localhost:7004/api/Workout/CreateMWorkoutLog/" + name + "/" + notes + "/" + id;
@@ -598,12 +598,31 @@ namespace TrackItWeb.Services
 			{
 				var response = await responseMessage.Content.ReadAsStringAsync();
 
-				return Convert.ToInt32(response);
+				return response;
 			}
 			else
 			{
-				return 0;
+				return "";
 			}
+		}
+
+		public async Task<bool> UpdateMWorkoutLog(StringContent info)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Workout/UpdateWorkoutLog";
+			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
+
+			return responseMessage.IsSuccessStatusCode;
+		}
+
+		public async Task<bool> DeleteMWorkoutLog(Guid id)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Workout/DeleteMWorkouLog/" + id;
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			return responseMessage.IsSuccessStatusCode;
 		}
 
 		public async Task<MemberWorkoutLog> GetMemberWorkoutLog(Guid id)
@@ -659,6 +678,53 @@ namespace TrackItWeb.Services
 				return new List<MemberWorkoutLog>();
 			}
 		}
+
+		public async Task<bool> CreateWorkoutLogStat(StringContent info)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Workout/CreateWorkoutLogStat";
+			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
+
+			return responseMessage.IsSuccessStatusCode;
+		}
+
+		public async Task<List<MemberWorkoutLogStat_DM>> GetMemberWorkoutLogStat(int memberId, int id)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Workout/GetMemberWorkoutLogStat/" + memberId + "/" + id;
+
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			if (responseMessage.IsSuccessStatusCode == true)
+			{
+				var mWorkoutLogs = JsonConvert.DeserializeObject<List<MemberWorkoutLogStat_DM>>(await responseMessage.Content.ReadAsStringAsync());
+
+				if (mWorkoutLogs != null)
+				{
+					return mWorkoutLogs;
+				}
+				else
+				{
+					return new List<MemberWorkoutLogStat_DM>();
+				}
+			}
+			else
+			{
+				return new List<MemberWorkoutLogStat_DM>();
+			}
+		}
+
+		public async Task<bool> DeleteMemberWorkoutLogStat(int memberId, int id)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Workout/DeleteMemberWorkoutLogStat/" + memberId + "/" + id;
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			return responseMessage.IsSuccessStatusCode;
+		}
+
 
 		#endregion
 
@@ -757,10 +823,10 @@ namespace TrackItWeb.Services
 			}
 		}
 
-		public async Task<bool> CreateMemberMetric(string info)
+		public async Task<bool> UpdateMember(string info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/CreateMemberMetric/" + info;
+			string url = "https://localhost:7004/api/Member/UpdateMember/" + info;
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
 			return responseMessage.IsSuccessStatusCode;

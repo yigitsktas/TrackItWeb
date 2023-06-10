@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.Text;
+using TrackItAPI.Entities;
 using TrackItWeb.Entities;
 using TrackItWeb.Helpers;
 using TrackItWeb.Services;
@@ -28,7 +30,9 @@ namespace TrackItWeb.Pages.Health.MyRecipe
 
             var info = JsonConvert.SerializeObject(recipeAdd);
 
-            var isTrue = await _apiService.CreateRecipe(info);
+			StringContent content = new StringContent(info, Encoding.UTF8, "application/json");
+
+			var isTrue = await _apiService.CreateRecipe(content);
 
             if (isTrue)
             {

@@ -27,13 +27,34 @@ namespace TrackItWeb.Pages.Health.MyRecipe
 
             if (recipe != null)
             {
-                model.RecipeID = recipe.RecipeID;
+                if (recipe.Season == 1)
+                {
+                    model.Season = "spring.";
+                }
+                else if (recipe.Season == 2)
+                {
+					model.Season = "summer.";
+				}
+				else if (recipe.Season == 3)
+				{
+					model.Season = "autmn.";
+				}
+				else if (recipe.Season == 4)
+				{
+					model.Season = "winter.";
+				}
+				else if (recipe.Season == 5)
+				{
+					model.Season = "all seasons.";
+				}
+
+				model.RecipeID = recipe.RecipeID;
                 model.Title = recipe.Summary;
                 model.Directions = recipe.Directions;
                 model.Serve = recipe.Serve;
                 model.PrepTime = recipe.PrepTime;
                 model.CookTime = recipe.CookTime;
-                model.Ingredients = recipe.Ingredients;
+                model.Ingredients = recipe.Ingredients.Replace("\r\n", "<br>");
                 if (recipe.Season == 1)
                 {
                     model.Season = "spring.";

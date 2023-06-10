@@ -67,7 +67,7 @@
 								<h5 class="card-title "><a class="text-dark" href="/Fitness/Log/UpdateLog?guid=@item.GUID">@item.WorkoutName.ToLower()</a></h5>
 							</div>
 							<div class="col-3 mb-2">
-								<button class="btn btn-outline-danger btn-sm border-0 rounded-0 float-end" asp-route-guid="@item.MemberWorkoutLogID" type="submit" data-toggle="tooltip" onclick="return confirm('are you sure?');" data-original-title="Delete" asp-page-handler="Delete">X</button>
+								<button class="btn btn-outline-danger btn-sm border-0 rounded-0 float-end" asp-route-guid="@item.GUID" type="submit" data-toggle="tooltip" onclick="return confirm('are you sure?');" data-original-title="Delete" asp-page-handler="Delete">X</button>
 							</div>
 						</div>
 						<div class="row">

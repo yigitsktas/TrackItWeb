@@ -20,10 +20,19 @@ namespace TrackItWeb.Pages.Health.Log
 		}
 
 		public List<IndexVM>? Index { get; set; }
+		public Dictionary<string, object> Parameters { get; set; }
 
-		public async Task<IActionResult> OnGet(string searchString, string orderBy)
+		public async Task<IActionResult> OnGet(string searchString="", string orderBy="")
 		{
 			var data = new List<MemberNutrient>();
+
+			Dictionary<string, object> map = new()
+			{
+				{"SearchString", searchString},
+				{"OrderBy", orderBy}
+			};
+
+			Parameters = map;
 
 			if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(orderBy))
 			{

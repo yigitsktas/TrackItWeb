@@ -29,6 +29,7 @@ namespace TrackItWeb.Pages.Member
 
             if (member != null)
             {
+                model.MemberID = User.GetMemberID();
                 model.Username = member.Username;
                 model.EMail = member.EMail;
             }
@@ -52,7 +53,7 @@ namespace TrackItWeb.Pages.Member
         {
             var data = JsonConvert.SerializeObject(Index_VM);
 
-            var isOk = await _apiService.CreateMemberMetric(data);
+            var isOk = await _apiService.UpdateMember(data);
 
             if (isOk)
             {
@@ -67,6 +68,7 @@ namespace TrackItWeb.Pages.Member
 
     public class Profile_DM
     {
+        public int MemberID { get; set; }
         public int MemberMetricID { get; set; }
         public string? Username { get; set; }
         public string? EMail { get; set; }

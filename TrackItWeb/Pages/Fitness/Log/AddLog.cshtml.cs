@@ -38,9 +38,9 @@ namespace TrackItWeb.Pages.Fitness.Log
 
 			var response = await _apiService.CreateMWorkoutLog(name, myNotes, User.GetMemberID());
 
-			if (response > 0)
+			if (!string.IsNullOrEmpty(response))
 			{
-				return Redirect("~/Fitness/Log/UpdateLog?id=" + response);
+				return Redirect("~/Fitness/Log/UpdateLog?guid=" + response.Replace("\"", ""));
 			}
 			else
 			{

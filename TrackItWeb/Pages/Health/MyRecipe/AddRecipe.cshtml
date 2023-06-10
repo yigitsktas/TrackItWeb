@@ -17,6 +17,7 @@
 		<div class="col-xl-3 col-sm-6 col-3">
 			<label class="form-label text-dark float-start fw-bold" for="a">season.</label>
 			<select id="a" class="form-control-md border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.Season" required>
+				<option value="5">All Seasons</option>
 				<option value="1">Spring</option>
 				<option value="2">Summer</option>
 				<option value="3">Autmn</option>
@@ -35,13 +36,14 @@
 		</div>
 		<div class="col-xl-3 col-sm-6 col-3">
 			<label class="form-label text-dark float-start fw-bold" for="a">health level.</label>
-			<select id="a" class="form-control-md border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.HealthLevel" required>
+			<input type="range" class="form-range" min="0" max="5" id="customRange2" asp-for="recipeAdd.HealthLevel">
+	@*		<select id="a" class="form-control-md border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.HealthLevel" required>
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
 				<option value="4">4</option>
 				<option value="5">5</option>
-			</select>
+			</select>*@
 		</div>
 	</div>
 

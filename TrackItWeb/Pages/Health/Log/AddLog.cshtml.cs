@@ -49,6 +49,7 @@ namespace TrackItWeb.Pages.Health.Log
             memberNutrient.MemberID = User.GetMemberID();
             memberNutrient.NutrientID = addLogDM.NutrientID;
             memberNutrient.Notes = addLogDM.Notes;
+            memberNutrient.GUID = Guid.NewGuid();
             memberNutrient.ServingSize = addLogDM.Portions;
             memberNutrient.ServingType = addLogDM.ServingType;
             memberNutrient.CreatedDate = DateTime.Now;

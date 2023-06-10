@@ -61,6 +61,9 @@
 			<p class="fw-bold">sugar: @Model.MyModel.TotalSugar.ToString("0.00")</p>
 		</div>
 	</div>
+	<label class="form-label text-dark float-start fw-bold" for="typeEmailX">notes.</label>
+	<textarea type="text" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="@Model.MyModel.Notes"></textarea>
+
 	<div class="col-xl-12 col-12 d-flex justify-content-center mt-3">
 		<button class="btn btn-dark btn-md rounded-0 float-end" type="submit">update.</button>
 	</div>
