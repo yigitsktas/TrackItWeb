@@ -23,5 +23,6 @@ namespace TrackItWeb.Entities
         public int ServingSize { get; set; }
         public int ServingType { get; set; }
         public int HealthLevel { get; set; }
+        public bool isPublic { get; set; }
     }
 }

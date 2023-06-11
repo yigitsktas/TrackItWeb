@@ -33,7 +33,14 @@ namespace TrackItWeb.Pages.Fitness.Weekly
 
 					workout.WorkoutID = item.WorkoutID;
 					workout.GUID = item.GUID;
-					workout.WorkoutName = item.WorkoutName;
+					if (item.WorkoutName.Length > 20)
+					{
+						workout.WorkoutName = item.WorkoutName.Substring(0, 20) + "...";
+					}
+					else
+					{
+						workout.WorkoutName = item.WorkoutName;
+					}
 					workout.Difficulty = item.Difficulty;
 
 					model.Add(workout);

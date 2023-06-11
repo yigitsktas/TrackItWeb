@@ -20,12 +20,20 @@ namespace TrackItWeb.Pages.Fitness.Exercise
 		}
 
 		public List<MSWorkoutDM> Index_VM { get; set; }
+		public Dictionary<string, object> Parameters { get; set; }
 
-		public async Task<IActionResult> OnGet()
+		public async Task<IActionResult> OnGet(string searchString)
 		{
 			List<MSWorkoutDM> model = new();
 			
-			var workouts = await _apiService.GetMSWorkouts(User.GetMemberID());	
+			var workouts = await _apiService.GetMSWorkouts(User.GetMemberID());
+
+			Dictionary<string, object> map = new()
+			{
+				{"SearchString", searchString},
+			};
+
+			Parameters = map;
 
 			if (workouts != null)
 			{
@@ -40,7 +48,14 @@ namespace TrackItWeb.Pages.Fitness.Exercise
 					model.Add(workout);
 				}
 
-				Index_VM = model;
+				if (!string.IsNullOrEmpty(searchString))
+				{
+					Index_VM = model.Where(x => x.WorkoutName.ToLower().Contains(searchString)).ToList();
+				}
+				else
+				{
+					Index_VM = model;
+				}
 
 				return Page();
 			}

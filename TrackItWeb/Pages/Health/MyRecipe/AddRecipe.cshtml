@@ -3,6 +3,44 @@
 @{
 	ViewData["Title"] = "add recipe.";
 }
+<style>
+	.form-check-input:checked {
+		background-color: #000;
+		border-color: #000;
+	}
+
+  .form-range::-webkit-slider-thumb {
+		background: #000;
+}
+
+.form-range::-moz-range-thumb {
+		background: #000;
+}
+
+.form-range::-ms-thumb {
+		background: #000;
+}
+
+@@media (prefers-reduced-motion: reduce) {
+  .form-range::-webkit-slider-thumb {
+    -webkit-transition: none;
+    transition: none;
+  }
+}
+.form-range::-webkit-slider-thumb:active {
+		background-color: #5A5A5A;
+}
+.form-range::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 0.5rem;
+  color: transparent;
+  cursor: pointer;
+		background-color: #D3D3D3;
+  border-color: transparent;
+  border-radius: 1rem;
+}
+
+</style>
 
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
@@ -14,66 +52,90 @@
 
 <form method="post">
 	<div class="row mt-3">
-		<div class="col-xl-3 col-sm-6 col-3">
-			<label class="form-label text-dark float-start fw-bold" for="a">season.</label>
-			<select id="a" class="form-control-md border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.Season" required>
-				<option value="5">All Seasons</option>
-				<option value="1">Spring</option>
-				<option value="2">Summer</option>
-				<option value="3">Autmn</option>
-				<option value="4">Winter</option>
-			</select>
+		<div class="col-xl-2 col-sm-6 col-3">
+			<div class="row">
+				<div class="col-12">
+					<label class="form-label text-dark float-start fw-bold" for="a">season.</label>
+				</div>
+				<div class="col-12">
+					<select id="a" class="form-control-md border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.Season" required>
+						<option value="5">All Seasons</option>
+						<option value="1">Spring</option>
+						<option value="2">Summer</option>
+						<option value="3">Autmn</option>
+						<option value="4">Winter</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-2 col-sm-6 col-3">
+			<div class="row">
+				<div class="col-12">
+					<label class="form-label text-dark float-start fw-bold" for="a">serving type.</label>
+				</div>
+				<div class="col-12">
 
+					<select id="a" class="form-control-md border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.ServingType" required>
+						<option value="1">Portions</option>
+						<option value="2">x</option>
+						<option value="3">x</option>
+						<option value="4">x</option>
+					</select>
+				</div>
+			</div>
 		</div>
-		<div class="col-xl-3 col-sm-6 col-3">
-			<label class="form-label text-dark float-start fw-bold" for="a">serving type.</label>
-			<select id="a" class="form-control-md border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.ServingType" required>
-				<option value="1">Portions</option>
-				<option value="2">x</option>
-				<option value="3">x</option>
-				<option value="4">x</option>
-			</select>
-		</div>
-		<div class="col-xl-3 col-sm-6 col-3">
-			<label class="form-label text-dark float-start fw-bold" for="a">health level.</label>
+		<div class="col-xl-4 col-sm-6 col-4">
+			<label class="form-label text-dark float-start fw-bold" for="a">health level. (0 to 5)</label>
 			<input type="range" class="form-range" min="0" max="5" id="customRange2" asp-for="recipeAdd.HealthLevel">
-	@*		<select id="a" class="form-control-md border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.HealthLevel" required>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
+			@*		<select id="a" class="form-control-md border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.HealthLevel" required>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
 			</select>*@
+		</div>
+		<div class="col-xl-4 col-sm-6 col-2">
+			<div class="row">
+					<div class="col-12 float-start">
+						<p class="form-label text-dark fw-bold">public?</p>
+					</div>
+					<div class="col-12 float-start">
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" asp-for="recipeAdd.isPublic">
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<div class="row mt-3">
-		<div class="col-xl-4 col-12 mt-1">
+		<div class="col-xl-12 col-12 mt-1">
 			<label class="form-label text-dark float-start fw-bold" for="typeEmailX">name.</label>
 			<input type="text" id="name" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.Summary" required />
 		</div>
-		<div class="col-xl-4 col-12 mt-1">
-			<label class="form-label text-dark float-start fw-bold" for="typeEmailX">ingredients.</label>
-			<textarea type="text" id="typeEmailX" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.Ingredients" required></textarea>
+		<div class="col-xl-4 col-sm-6 col-4 mt-3">
+			<label class="form-label text-dark float-start fw-bold" for="a">serving size (ppl).</label>
+			<input type="number" id="typeEmailX" class="form-control form-control-sm border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.ServingSize" required />
 		</div>
-		<div class="col-xl-4 col-12 mt-1">
-			<label class="form-label text-dark float-start fw-bold" for="typeEmailX">directions.</label>
-			<textarea type="text" id="typeEmailX" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.Directions" required></textarea>
+		<div class="col-xl-4 col-sm-6 col-4 mt-3">
+			<label class="form-label text-dark float-start fw-bold" for="a">prep time (min).</label>
+			<input type="number" id="typeEmailX" class="form-control form-control-sm border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.PrepTime" required />
+		</div>
+		<div class="col-xl-4 col-sm-6 col-4 mt-3">
+			<label class="form-label text-dark float-start fw-bold" for="a">cook time (min).</label>
+			<input type="number" id="typeEmailX" class="form-control form-control-sm border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.CookTime" required />
 		</div>
 	</div>
 
 	<div class="row mt-3">
-		<div class="col-xl-3 col-sm-6 col-4">
-			<label class="form-label text-dark float-start fw-bold" for="a">serving size (ppl).</label>
-			<input type="number" id="typeEmailX" class="form-control form-control-sm border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.ServingSize" required />
+		<div class="col-xl-6 col-12 mt-1">
+			<label class="form-label text-dark float-start fw-bold" for="typeEmailX">ingredients.</label>
+			<textarea type="text" id="typeEmailX" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.Ingredients" required></textarea>
 		</div>
-		<div class="col-xl-3 col-sm-6 col-4">
-			<label class="form-label text-dark float-start fw-bold" for="a">prep time (min).</label>
-			<input type="number" id="typeEmailX" class="form-control form-control-sm border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.PrepTime" required />
-		</div>
-		<div class="col-xl-3 col-sm-6 col-4">
-			<label class="form-label text-dark float-start fw-bold" for="a">cook time (min).</label>
-			<input type="number" id="typeEmailX" class="form-control form-control-sm border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.CookTime" required />
+		<div class="col-xl-6 col-12 mt-1">
+			<label class="form-label text-dark float-start fw-bold" for="typeEmailX">directions.</label>
+			<textarea type="text" id="typeEmailX" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="recipeAdd.Directions" required></textarea>
 		</div>
 	</div>
 

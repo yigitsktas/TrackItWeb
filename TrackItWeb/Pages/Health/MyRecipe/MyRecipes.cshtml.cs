@@ -18,14 +18,29 @@ namespace TrackItWeb.Pages.Health.MyRecipe
 		}
 
 		public List<TrackItWeb.Entities.Recipe> IndexVM { get; set; }
+		public Dictionary<string, object> Parameters { get; set; }
 
-		public async Task<IActionResult> OnGet()
+		public async Task<IActionResult> OnGet(string searchString)
         {
 			var memberRecipes = await _apiService.GetMemberRecipes(User.GetMemberID());
 
+			Dictionary<string, object> map = new()
+			{
+				{"SearchString", searchString},
+			};
+
+			Parameters = map;
+
 			if (memberRecipes != null)
 			{
-				IndexVM = memberRecipes;
+				if (!string.IsNullOrEmpty(searchString))
+				{
+					IndexVM = memberRecipes.Where(x => x.Summary.Contains(searchString)).ToList();
+				}
+				else
+				{
+					IndexVM = memberRecipes;
+				}
 				
 				return Page();
 			}

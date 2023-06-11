@@ -12,62 +12,72 @@
 	</ol>
 </nav>
 
-<div class="container"></div>
 <form method="post">
 	<div class="row">
 		<div class="col-xl-9 col-9">
-			<input type="hidden" value="@Model.MyModel.MemberNutrientID" name="id">
+			<input type="hidden" asp-for="@Model.MyModel.MemberNutrientID">
+			<input type="hidden" asp-for="@Model.MyModel.GUID">
 			<h4 class="fw-bold">@Model.MyModel.NutrientName // @Model.MyModel.Brand</h4>
 		</div>
 		<div class="col-xl-3 col-3">
-			<p style="font-size: 17px;" class="fw-bold">@Model.MyModel.CreatedDate.ToString("dd/MM/yyyy")</p>
+			<p style="font-size: 17px;" class="fw-bold float-end">@Model.MyModel.CreatedDate.ToString("dd/MM/yyyy")</p>
 		</div>
 	</div>
-	<div class="row">
+	<hr class='mt-1' />
+	<div class="row mt-4">
 		@{
 			string type = "";
 		}
 		@if (Model.MyModel.NutrientType == 1) { type = "ml"; }
 		else { type = "gr"; }
-		<div class="col-xl-3 col-8">
+		<div class="col-xl-12 col-12">
 			<div class="row">
-				<div class="col-3">
-					<p class="fw-bold">portions:</p>
+				<div class="col-xl-1 col-2">
+					<p class="fw-bold mt-1">portions:</p>
 				</div>
-				<div class="col-3">
-					<input type="number" class="form-control border-2 rounded-0 bg-transparent text-dark fw-bold" style="width: 70px; height: 25px;" asp-for="@Model.MyModel.ServingSize" />
+				<div class="col-xl-2 col-4">
+					<div class="row">
+						<div class="col-6">
+							<input type="number" class="form-control border-2 rounded-0 bg-transparent text-dark fw-bold" style="width: 70px; height: 25px;" asp-for="@Model.MyModel.ServingSize" />
+						</div>
+						<div class="col-6">
+							<p class="fw-bold mt-1">@type</p>
+						</div>
+					</div>
 				</div>
-				<div class="col-3">
-					<p class="fw-bold">@type</p>
+				<div class="col-xl-9 col-6">
+					<p class="fw-bold mt-1 float-end">calorie: @Model.MyModel.Calorie kcal</p>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<div class="row mt-3" style="font-size: 16px">
-		<div class="col-xl-12 col-12">
-			<p class="fw-bold">calorie: @Model.MyModel.Calorie</p>
+	<hr class='mt-3 mb-3' />
+	<h5 class="fw-bold mt-3 text-center">macros.</h5>
+	<div class="row mt-4" style="font-size: 14px">
+		<div class="col-xl-3 col-3 text-center">
+			<p class="fw-bold">carb: @Model.MyModel.TotalCarb.ToString("0.00") @type</p>
 		</div>
-		<div class="col-xl-3 col-3">
-			<p class="fw-bold">carb: @Model.MyModel.TotalCarb.ToString("0.00")</p>
+		<div class="col-xl-3 col-3 text-center">
+			<p class="fw-bold">fat: @Model.MyModel.TotalFat.ToString("0.00") @type</p>
 		</div>
-		<div class="col-xl-3 col-3">
-			<p class="fw-bold">fat: @Model.MyModel.TotalFat.ToString("0.00")</p>
+		<div class="col-xl-3 col-3 text-center">
+			<p class="fw-bold">protein: @Model.MyModel.TotalProtein.ToString("0.00") @type</p>
 		</div>
-		<div class="col-xl-3 col-3">
-			<p class="fw-bold">protein: @Model.MyModel.TotalProtein.ToString("0.00")</p>
-		</div>
-		<div class="col-xl-3 col-3">
-			<p class="fw-bold">sugar: @Model.MyModel.TotalSugar.ToString("0.00")</p>
+		<div class="col-xl-3 col-3 text-center">
+			<p class="fw-bold">sugar: @Model.MyModel.TotalSugar.ToString("0.00") @type</p>
 		</div>
 	</div>
-	<label class="form-label text-dark float-start fw-bold" for="typeEmailX">notes.</label>
+	<hr class='mt-3 mb-3' />
+	<label class="form-label text-dark float-start fw-bold mt-3" for="typeEmailX">notes.</label>
 	<textarea type="text" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="@Model.MyModel.Notes"></textarea>
 
-	<div class="col-xl-12 col-12 d-flex justify-content-center mt-3">
+	<div class="col-xl-12 col-12 d-flex justify-content-center mt-4">
 		<button class="btn btn-dark btn-md rounded-0 float-end" type="submit">update.</button>
 	</div>
 </form>
 
-
-
+<script type="text/javascript">
+	function preventBack() { window.history.forward(); }
+	setTimeout("preventBack()", 0);
+	window.onunload = function () { null };
+</script>

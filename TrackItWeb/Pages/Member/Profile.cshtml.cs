@@ -57,7 +57,7 @@ namespace TrackItWeb.Pages.Member
 
             if (isOk)
             {
-                return Page();
+                return RedirectToPage("/Member/Profile");
             }
             else
             {

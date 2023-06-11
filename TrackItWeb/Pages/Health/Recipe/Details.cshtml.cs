@@ -27,11 +27,11 @@ namespace TrackItWeb.Pages.Health.Recipe
             {
                 model.RecipeID = recipe.RecipeID;
                 model.Title = recipe.Summary;
-                model.Directions = recipe.Directions;
+                model.Directions = recipe.Directions.Replace("\r\n", "<br>"); ;
                 model.Serve = recipe.Serve;
                 model.PrepTime = recipe.PrepTime;
                 model.CookTime = recipe.CookTime;
-                model.Ingredients = recipe.Ingredients;
+                model.Ingredients = recipe.Ingredients.Replace("\r\n", "<br>"); ;
                 if (recipe.Season == 1)
                 {
                     model.Season = "spring.";

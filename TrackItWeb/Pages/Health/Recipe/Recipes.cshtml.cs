@@ -18,14 +18,22 @@ namespace TrackItWeb.Pages.Health.Recipe
         }
 
         public List<Recipes_DM>? Index_VM { get; set; }
+		public Dictionary<string, object> Parameters { get; set; }
 
-        public async Task<IActionResult> OnGet()
+		public async Task<IActionResult> OnGet(string searchString)
         {
             List<Recipes_DM> model = new();
 
             var recipes = await _apiService.GetRecipes();
 
-            if (recipes != null)
+			Dictionary<string, object> map = new()
+			{
+				{"SearchString", searchString},
+			};
+
+			Parameters = map;
+
+			if (recipes != null)
             {
                 foreach (var item in recipes)
                 {
@@ -53,9 +61,16 @@ namespace TrackItWeb.Pages.Health.Recipe
                     model.Add(myRecipe);
                 }
 
-                Index_VM = model;
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    Index_VM = model.Where(x => x.Title.Contains(searchString)).ToList();
+                }
+                else
+                {
+					Index_VM = model;
+				}
 
-                return Page();
+				return Page();
             }
             else
             {

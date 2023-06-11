@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
+using System.Text;
+using TrackItWeb.Entities;
 using TrackItWeb.Services;
 
 namespace TrackItWeb.Pages.Health.Log
@@ -15,6 +19,7 @@ namespace TrackItWeb.Pages.Health.Log
 			_apiService = apiService;
 		}
 
+		[BindProperty]
 		public IndexVM MyModel { get; set; }
 
 		public async Task<IActionResult> OnGet(Guid guid)
@@ -27,6 +32,7 @@ namespace TrackItWeb.Pages.Health.Log
 
 				indexVM.Notes = memberNutrient.Notes;
 				indexVM.MemberNutrientID = memberNutrient.MemberNutrientID;
+				indexVM.GUID = memberNutrient.GUID;
 				indexVM.ServingSize = memberNutrient.ServingSize;
 				indexVM.CreatedDate = memberNutrient.CreatedDate;
 
@@ -50,11 +56,36 @@ namespace TrackItWeb.Pages.Health.Log
 			}
 
 			else { return RedirectToPage("/Error"); }
-        }
+		}
+
+		public async Task<IActionResult> OnPost(IndexVM MyModel)
+		{
+			MemberNutrient mn = new();
+
+			mn.MemberNutrientID = MyModel.MemberNutrientID;
+			mn.Notes = MyModel.Notes;
+			mn.ServingSize = MyModel.ServingSize;
+
+			var info = JsonConvert.SerializeObject(mn);
+
+			StringContent content = new StringContent(info, Encoding.UTF8, "application/json");
+
+			var isOk = await _apiService.UpdateMemberNutrient(content);
+
+			if (isOk)
+			{
+				return Redirect("~/Health/Log/LogDetails?guid=" + MyModel.GUID);
+			}
+			else
+			{
+				return Page();
+			}
+		}
 
 		public class IndexVM
 		{
 			public int MemberNutrientID { get; set; }
+			public Guid GUID { get; set; }
 			public double ServingSize { get; set; }
 			public string? Notes { get; set; }
 			public string? NutrientName { get; set; }

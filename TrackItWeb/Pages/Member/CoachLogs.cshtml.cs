@@ -23,7 +23,7 @@ namespace TrackItWeb.Pages.Member
 
 			if (response != null)
 			{
-				chatLogs = response;
+				chatLogs = response.OrderByDescending(x => x.CreatedDate).ToList();
 
 				return Page();
 			}
@@ -37,7 +37,7 @@ namespace TrackItWeb.Pages.Member
 		{
 			var isDeleted = await _apiService.DeleteChatLog(guid);
 
-			if (isDeleted) { return RedirectToPage("/Member/ChatLogs"); }
+			if (isDeleted) { return RedirectToPage("/Member/CoachLogs"); }
 			else { return RedirectToPage("/Error"); }
 		}
 	}

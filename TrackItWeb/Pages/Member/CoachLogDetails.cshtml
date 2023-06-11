@@ -6,13 +6,16 @@
 
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
+		<li class="breadcrumb-item" aria-current="page"><a class="text-decoration-none text-dark" href="/Home/Index">home</a></li>
 		<li class="breadcrumb-item" aria-current="page"><a class="text-decoration-none text-dark" href="/Member/Coach">ai coach</a></li>
 		<li class="breadcrumb-item" aria-current="page"><a class="text-decoration-none text-dark" href="/Member/CoachLogs">logs</a></li>
 		<li class="breadcrumb-item active" aria-current="page">@Model.MyModel.Prompt</li>
 	</ol>
 </nav>
 
+<div class="container-fluid">
 <h2>prompt: @Model.MyModel.Prompt // </h2>
 <h5>created date: @Model.MyModel.CreatedDate.ToShortDateString()</h5>
 <h3> </h3><br>
 <h4>answer: @Model.MyModel.Answer </h4>
+</div>

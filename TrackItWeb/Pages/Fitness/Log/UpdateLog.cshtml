@@ -19,7 +19,6 @@
 		<li class="breadcrumb-item active" aria-current="page">update log</li>
 	</ol>
 </nav>
-
 <form method="post">
 	<div class="row">
 		<input id="MemberWorkoutID" type="hidden" asp-for="@Model.MyResult.MemberWorkoutID" />
@@ -130,7 +129,7 @@
 
 	$("#ddl_our").change(function () {
 		if ($(this).val() > 0) { $("#ddl_your").prop("disabled", true); $("#warning").attr("hidden", true); }
-		else { $("#ddl_your").prop("disabled", false)}
+		else { $("#ddl_your").prop("disabled", false) }
 	});
 	$("#ddl_your").change(function () {
 		if ($(this).val() > 0) { $("#ddl_our").prop("disabled", true); $("#warning").attr("hidden", true); }
@@ -189,7 +188,7 @@
 		formData.append('model.Reps', reps);
 		formData.append('model.Weight', weight);
 
-		if(itemID>0){
+		if (itemID > 0) {
 			$.ajax(
 				{
 					type: "POST",
@@ -212,8 +211,7 @@
 						}
 				});
 		}
-		else
-		{
+		else {
 			$("#warning").attr("hidden", false);
 		}
 	}
@@ -240,4 +238,7 @@
 			});
 	}
 
+	function preventBack() { window.history.forward(); }
+	setTimeout("preventBack()", 0);
+	window.onunload = function () { null };
 </script>

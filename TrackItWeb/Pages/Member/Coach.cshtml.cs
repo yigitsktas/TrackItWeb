@@ -71,7 +71,7 @@ namespace TrackItWeb.Pages.Member
 
 				if (isOk)
 				{
-					return RedirectToPage("/Home/Index");
+					return RedirectToPage("/Member/CoachLogs");
 				}
 				else
 				{

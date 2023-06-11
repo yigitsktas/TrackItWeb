@@ -133,6 +133,15 @@ namespace TrackItWeb.Services
 			return responseMessage.IsSuccessStatusCode;
 		}
 
+		public async Task<bool> UpdateMemberNutrient(StringContent info)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Nutrient/UpdateMemberNutrient";
+			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
+
+			return responseMessage.IsSuccessStatusCode;
+		}
+
 		public async Task<MemberNutrient> GetMemberNutrientLog(Guid id)
 		{
 			var client = new HttpClient();
@@ -268,6 +277,15 @@ namespace TrackItWeb.Services
 			}
 		}
 
+		public async Task<bool> UpdateRecipe(StringContent info)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Nutrient/UpdateRecipe";
+			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
+
+			return responseMessage.IsSuccessStatusCode;
+		}
+
 		public async Task<List<Recipe>> GetRandomRecipes()
 		{
 			var client = new HttpClient();
@@ -295,7 +313,7 @@ namespace TrackItWeb.Services
 			}
 		}
 
-		public async Task<List<NAnalytics>> GetAnalytics(int id, string date, string info)
+		public async Task<List<NAnalytics>> GetNutrientAnalytics(int id, string date, string info)
 		{
 			var client = new HttpClient();
 			string url = "https://localhost:7004/api/Nutrient/GetNutrientAnalytics/" + id + "/" + info + "/" + date;
@@ -360,6 +378,15 @@ namespace TrackItWeb.Services
 			string url = "https://localhost:7004/api/Workout/CreateMSWorkout/" + info;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			return responseMessage.IsSuccessStatusCode;
+		}
+
+		public async Task<bool> UpdateMSWorkout(StringContent info)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Workout/UpdateMSWorkout";
+			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
 
 			return responseMessage.IsSuccessStatusCode;
 		}
@@ -725,6 +752,32 @@ namespace TrackItWeb.Services
 			return responseMessage.IsSuccessStatusCode;
 		}
 
+		public async Task<List<WorkoutAnalytics>> GetWorkoutAnalytics(int id, string date)
+		{
+			var client = new HttpClient();
+			string url = "https://localhost:7004/api/Workout/GetWorkoutAnalytics/" + id + "/" + date;
+
+			client.BaseAddress = new Uri(url);
+			HttpResponseMessage responseMessage = await client.GetAsync(url);
+
+			if (responseMessage.IsSuccessStatusCode == true)
+			{
+				var mWorkoutLogs = JsonConvert.DeserializeObject<List<WorkoutAnalytics>>(await responseMessage.Content.ReadAsStringAsync());
+
+				if (mWorkoutLogs != null)
+				{
+					return mWorkoutLogs;
+				}
+				else
+				{
+					return new List<WorkoutAnalytics>();
+				}
+			}
+			else
+			{
+				return new List<WorkoutAnalytics>();
+			}
+		}
 
 		#endregion
 

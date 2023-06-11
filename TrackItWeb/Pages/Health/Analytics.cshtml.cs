@@ -21,7 +21,7 @@ namespace TrackItWeb.Pages.Nutrient
 
 		public async Task<JsonResult> OnGetFormatted(string Date, string Info)
 		{
-			var result = await _apiService.GetAnalytics(User.GetMemberID(), Date, Info);
+			var result = await _apiService.GetNutrientAnalytics(User.GetMemberID(), Date, Info);
 
 			return new JsonResult(result);
 		}

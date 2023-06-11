@@ -18,12 +18,23 @@ namespace TrackItWeb.Pages.Fitness.Log
 		}
 
 		public List<IndexVM>? Index { get; set; }
+		public Dictionary<string, object> Parameters { get; set; }
 
-		public async Task<IActionResult> OnGet(string searchString, string orderBy)
+		public async Task<IActionResult> OnGet(string orderBy, bool isDone)
 		{
 			var data = new List<MemberWorkoutLog>();
 
 			data = await _apiService.GetMemberWorkoutLogs(User.GetMemberID());
+
+			var workouts = await _apiService.GetMSWorkouts(User.GetMemberID());
+
+			Dictionary<string, object> map = new()
+			{
+				{"OrderBy", orderBy},
+				{"IsDone", isDone},
+			};
+
+			Parameters = map;
 
 			var memberWorkoutLogs = data.ToList();
 
@@ -44,7 +55,21 @@ namespace TrackItWeb.Pages.Fitness.Log
 					indexList.Add(index);
 				}
 
-				Index = indexList;
+				if (!string.IsNullOrEmpty(orderBy))
+				{
+					if (orderBy == "date-desc")
+					{
+						Index = indexList.Where(x => x.isDone == isDone).OrderByDescending(x => x.CreatedDate).ToList();
+					}
+					else
+					{
+						Index = indexList.Where(x => x.isDone == isDone).OrderBy(x=> x.CreatedDate).ToList();
+					}
+				}
+				else
+				{
+					Index = indexList;
+				}
 
 				return Page();
 			}

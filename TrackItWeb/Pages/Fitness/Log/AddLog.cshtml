@@ -12,25 +12,26 @@
 		<li class="breadcrumb-item active" aria-current="page">add log</li>
 	</ol>
 </nav>
-<form method="post">
-	<div class="row">
-		<div class="col-6">
-			<label class="form-label text-dark float-start fw-bold">workout name.</label>
-			<input type="text" name="name" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" required />
+
+	<form method="post">
+		<div class="row">
+			<div class="col-6">
+				<label class="form-label text-dark float-start fw-bold">workout name.</label>
+				<input type="text" name="name" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold" required />
+			</div>
+			<div class="col-12 mt-3">
+				<label class="form-label text-dark float-start fw-bold" for="typeEmailX">notes.</label>
+				<textarea type="text" name="notes" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold"></textarea>
+			</div>
 		</div>
-		<div class="col-12 mt-3">
-			<label class="form-label text-dark float-start fw-bold" for="typeEmailX">notes.</label>
-			<textarea type="text" name="notes" class="form-control form-control-md border-2 rounded-0 bg-transparent text-dark fw-bold"></textarea>
+		<div class="mt-5 d-flex justify-content-center">
+			<button class="btn btn-dark btn-md rounded-0 float-end" id="submit" type="submit" asp-page-handler="AddMWLog">create.</button>
 		</div>
-	</div>
-	<div class="mt-5 d-flex justify-content-center">
-		<button class="btn btn-dark btn-md rounded-0 float-end" id="submit" type="submit" asp-page-handler="AddMWLog">create.</button>
-	</div>
-</form>
+	</form>
 
 <script>
 	//$("#submit").on("click", function () {
-		
+
 	//	var name = $("#name").val();
 	//	var notes = $("#notes").val();
 
