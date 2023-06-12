@@ -10,6 +10,73 @@
 		background-color: #000;
 		border-color: #000;
 	}
+
+	.select2-container--default .select2-selection--single,
+	.select2-selection .select2-selection--single {
+		border: 1px solid #d2d6de;
+		border-radius: 0;
+		padding: 6px 12px;
+		height: 28px
+	}
+
+	.select2-container--default .select2-selection--single {
+		background-color: #fff;
+		border: 1px solid #aaa;
+		border-radius: 0px
+	}
+
+	.select2-container .select2-selection--single {
+		box-sizing: border-box;
+		cursor: pointer;
+		display: block;
+		height: 28px;
+		user-select: none;
+		-webkit-user-select: none
+	}
+
+		.select2-container .select2-selection--single .select2-selection__rendered {
+			padding-right: 10px
+		}
+
+		.select2-container .select2-selection--single .select2-selection__rendered {
+			padding-left: 0px;
+			padding-right: 20px;
+			height: auto;
+			font-weight: bold;
+			margin-top: -8px
+		}
+
+	.select2-container--default .select2-selection--single .select2-selection__rendered {
+		color: #444;
+		line-height: 28px
+	}
+
+	.select2-container--default .select2-selection--single,
+	.select2-selection .select2-selection--single {
+		border: 2px solid #d2d6de;
+		border-radius: 0 !important;
+		padding: 6px 12px;
+		height: 28px !important
+	}
+
+		.select2-container--default .select2-selection--single .select2-selection__arrow {
+			height: 26px;
+			position: absolute;
+			top: 0px !important;
+			right: 1px;
+			width: 20px
+		}
+
+	.select2-hidden-accessible {
+		border: 0 !important;
+		clip: rect(0 0 0 0) !important;
+		height: 1px !important;
+		margin: -5px !important;
+		overflow: hidden !important;
+		padding: 0 !important;
+		position: absolute !important;
+		width: 1px !important
+	}
 </style>
 
 <nav aria-label="breadcrumb">
@@ -113,7 +180,7 @@
 	<div class="col-2">
 		<div class="row">
 			<div class="col-12">
-				<label class="form-label text-dark float-end fw-bold" for="ddl">add.</label>
+				<label class="form-label text-light float-end fw-bold" for="ddl">.</label>
 			</div>
 			<div class="col-12">
 				<button id="btn_sbmt" class="btn btn-outline-dark border-1 btn-sm rounded-0 fw-bold float-end" style="width:30px" onclick="PostStats()">+</button>
@@ -126,6 +193,11 @@
 <div class="mt-5 p-1 hidden" id="LogStats"></div>
 
 <script>
+	$(document).ready(function () {
+		$('#ddl_our').select2();
+		$('#ddl_your').select2();
+	});
+
 
 	$("#ddl_our").change(function () {
 		if ($(this).val() > 0) { $("#ddl_your").prop("disabled", true); $("#warning").attr("hidden", true); }

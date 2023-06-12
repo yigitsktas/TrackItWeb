@@ -32,7 +32,7 @@
 </div>
 
 <div class="col-xl-12 text-center">
-	<a class="btn btn-outline-dark border-2 btn-sm m-3 rounded-0 fw-bold" href="/Ftiness/Index">go back.</a>
+	<a class="btn btn-outline-dark border-2 btn-sm m-3 rounded-0 fw-bold" href="/Fitness/Index">go back.</a>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -43,71 +43,68 @@
 	function SetChartDetails() {
 		var DataName = $("#charttype option:selected").val();
 		var Params = " ";
+		var r = "";
 
 		$("#charttitle").text($("#charttype option:selected").text())
-
-		var options = {
-			series: [],
-			chart: {
-				type: 'bar', stacked: 'true', fontFamily: 'Arial', height: 470, width: "100%", defaultLocale: 'en',
-				locales: [{
-					"name": "tr",
-					"options": {
-						"toolbar": {
-							"exportToSVG": "SVG İndir",
-							"exportToCSV": "CSV İndir",
-							"exportToPNG": "PNG İndir",
-							"menu": "Menü",
-							"selection": "Seç",
-							"selectionZoom": "Seçerek Yakınlaştır",
-							"zoomIn": "Yaklaştır",
-							"zoomOut": "Uzaklaştır",
-							"pan": "Kaydırma",
-							"reset": "Sıfırla"
-						}
-					}
-				}],
-				defaultLocale: "tr"
-			},
-			colors: ['#FA7900'],
-			tooltip: { enabled: true },
-			dataLabels: { enabled: true },
-			grid: { show: true, borderColor: '#000000' },
-			xaxis: {
-				labels: {
-					show: true,
-					style: {
-						fontSize: '14px',
-						cssClass: 'apexcharts-yaxis-label',
-						colors: '#000000'
-					}
-				}
-			},
-			yaxis: {
-				labels: {
-					show: true,
-					align: 'right',
-					style: {
-						fontSize: '12px',
-						cssClass: 'apexcharts-xaxis-label',
-						colors: '#000000'
-					}
-				}
-			}
-		};
-
-		var chart = new ApexCharts(document.querySelector('#chart'), options);
-		chart.render();
-
+		
 		var url = "?Filter=" + DataName + "&handler=Formatted";
 
 		$.getJSON(url, function (response) {
-			chart.updateSeries([{
-				name: '',
-				data: response
-			}])
+			var options = {
+				series: response,
+				chart: {
+					type: 'bar', stacked: 'true', fontFamily: 'Arial', height: 470, width: "100%", defaultLocale: 'en',
+					locales: [{
+						"name": "tr",
+						"options": {
+							"toolbar": {
+								"exportToSVG": "Download SVG",
+								"exportToCSV": "Download CSV",
+								"exportToPNG": "Download PNG",
+								"menu": "Menu",
+								"selection": "Select",
+								"selectionZoom": "Select Area",
+								"zoomIn": "Zoom In",
+								"zoomOut": "Zoom Out",
+								"pan": "Slide",
+								"reset": "Reset"
+							}
+						}
+					}],
+					defaultLocale: "tr"
+				},
+				colors: ['#808080'],
+				tooltip: { enabled: true },
+				dataLabels: { enabled: true },
+				grid: { show: true, borderColor: '#000000' },
+				xaxis: {
+					labels: {
+						show: true,
+						style: {
+							fontSize: '14px',
+							cssClass: 'apexcharts-yaxis-label',
+							colors: '#000000'
+						}
+					}
+				},
+				yaxis: {
+					labels: {
+						show: true,
+						align: 'right',
+						style: {
+							fontSize: '12px',
+							cssClass: 'apexcharts-xaxis-label',
+							colors: '#000000'
+						}
+					}
+				}
+			};
+
+			var chart = new ApexCharts(document.querySelector('#chart'), options);
+			chart.render();
 		});
 		chart.resetSeries();
+
 	}
 
 </script>

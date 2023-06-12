@@ -70,7 +70,7 @@ namespace TrackItWeb.Pages.Fitness.Log
 		{
 			var response = await _apiService.GetMemberWorkoutLogStat(User.GetMemberID(), id);
 
-			string html = "<div class='row'><div class='col-3'><label class='form-label text-dark float-start fw-bold'>workout name.</label></div><div class='col-3'><label class='form-label text-dark float-start fw-bold'>reps.</label></div><div class='col-3'><label class='form-label text-dark float-start fw-bold'>weight.</label></div><div class='col-3'><label class='form-label text-dark float-end fw-bold'>delete.</label></div></div><hr class='mt-1 mb-1' />";
+			string html = "<div class='row'><div class='col-3'><label class='form-label text-dark float-start fw-bold'>workout name.</label></div><div class='col-3'><label class='form-label text-dark float-start fw-bold'>muscle.</label></div><div class='col-2'><label class='form-label text-dark float-start fw-bold'>reps.</label></div><div class='col-2'><label class='form-label text-dark float-start fw-bold'>weight.</label></div><div class='col-2'><label class='form-label text-dark float-end fw-bold'></label></div></div><hr class='mt-1 mb-1' />";
 
 			if (response != null)
 			{
@@ -79,18 +79,22 @@ namespace TrackItWeb.Pages.Fitness.Log
 					html += "<div class='row mt-2'>";
 
 					html += "<div class='col-3 mt-1'>";
-					html += "<label class='form-label text-dark float-start fw-bold'>" + item.WorkoutName + "</label>";
+					html += "<label class='form-label text-dark float-start fw-bold'>" + item.WorkoutName.ToLower() + "</label>";
 					html += "</div>";
 
 					html += "<div class='col-3 mt-1'>";
-					html += "<label class='form-label text-dark float-start fw-bold'>" + item.Reps + "</label>";
+					html += "<label class='form-label text-dark float-start fw-bold'>" + item.MuscleGroup.ToLower() + "</label>";
 					html += "</div>";
 
-					html += "<div class='col-3 mt-1'>";
+					html += "<div class='col-2 mt-1'>";
+					html += "<label class='form-label text-dark float-start fw-bold'>" + item.Reps + "x</label>";
+					html += "</div>";
+
+					html += "<div class='col-2 mt-1'>";
 					html += "<label class='form-label text-dark float-start fw-bold'>" + item.Weight + " kg</label>";
 					html += "</div>";
 
-					html += "<div class='col-3'>";
+					html += "<div class='col-2'>";
 					html += "<button id='btn_sbmt' class='btn btn-outline-danger border-1 border-dark btn-sm rounded-0 fw-bold float-end' style='width: 30px' onclick='DeleteStat(" + item.MemberStatisticID + ")'>X</button>";
 					html += "</div>";
 
