@@ -17,7 +17,7 @@ namespace TrackItWeb.Pages.Fitness
 			_apiService = apiService;
 		}
 
-		public async Task<JsonResult> OnGetFormatted(string Filter)
+		public async Task<JsonResult> OnGetFormatted(string Filter, string Filter2)
 		{
 			var result = await _apiService.GetWorkoutAnalytics(User.GetMemberID(), Filter);
 
@@ -29,7 +29,14 @@ namespace TrackItWeb.Pages.Fitness
 
 				foreach (var b in item.Logs)
 				{
-					myList.Add(b.Reps + " , " + b.Weight);
+					if (Filter2 == "1")
+					{
+						myList.Add(b.Reps);
+					}
+					else if (Filter2 == "2")
+					{
+						myList.Add(b.Weight);
+					}
 				}
 
 				graph.name = item.Name;

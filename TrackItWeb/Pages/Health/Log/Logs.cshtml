@@ -31,18 +31,18 @@
 			<div class="collapse" id="collapseExample">
 				<div class="card card-body border-0">
 					<div class="row float-start">
-						<div class="col-xl-4 col-4">
+						<div class="col-xl-4 col-md-3 col-4">
 							<label class="form-label text-dark float-start fw-bold">nutrient name.</label>
 							<input type="text" class="form-control form-control-sm border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="@Model.Parameters["SearchString"]" name="searchString" />
 						</div>
-						<div class="col-xl-1 col-3">
+						<div class="col-xl-1 col-md-2 col-3">
 							<label class="form-label text-dark float-start fw-bold">order by.</label>
 							<select id="" style="width: 100px; height:29px" class="form-control-sm border border-2 rounded-0 bg-transparent text-dark fw-bold" asp-for="@Model.Parameters["OrderBy"]" name="orderBy">
 								<option class="text-dark" value="date-desc" selected>created date descending</option>
 								<option class="text-dark" value="date-asc">created date ascending</option>
 							</select>
 						</div>
-						<div class="col-xl-5 col-5" style="margin-top: 28px">
+						<div class="col-xl-5 col-md-4 col-5" style="margin-top: 28px">
 							<button id="btn-filter" class="btn btn-dark btn-sm rounded-0 float-start" type="submit">filter.</button>
 							<a id="btn-remove" class="btn btn-dark btn-sm rounded-0 float-start" style="margin-left: 20px" href="/Health/Log/Logs">remove filters.</a>
 						</div>
@@ -56,12 +56,19 @@
 	<div class="row p-2">
 		@foreach (var item in Model.Index)
 		{
-			<div class="col-xl-3 col-sm-4 col-6 mt-3">
+			<div class="col-xl-3 col-sm-4 col-4 col-6 mt-3">
 				<div class="card border-2 border-dark" style="width: 16rem;">
 					<div class="card-body">
 						<div class="row">
 							<div class="col-9">
-								<h5 class="card-title "><a class="text-dark" href="/Health/Log/LogDetails?guid=@item.GUID">@item.NutrientName.ToLower()</a></h5>
+								@if (item.NutrientName.Length > 10)
+								{
+									<h5 class="card-title "><a class="text-dark" href="/Health/Log/LogDetails?guid=@item.GUID">@item.NutrientName.Substring(0,10).ToLower()...</a></h5>
+								}
+								else
+								{	
+									<h5 class="card-title "><a class="text-dark" href="/Health/Log/LogDetails?guid=@item.GUID">@item.NutrientName.ToLower()</a></h5>
+								}
 							</div>
 							<div class="col-3 mb-2">
 								<button class="btn btn-outline-danger btn-sm border-0 rounded-0 float-end" asp-route-guid="@item.GUID" type="submit" data-toggle="tooltip" onclick="return confirm('are you sure?');" data-original-title="Delete" asp-page-handler="Delete">X</button>

@@ -20,7 +20,7 @@ namespace TrackItWeb.Pages.Authentication
 		public async Task<IActionResult> OnPostAsync(string username, string password)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/Login/" + username + "/" + password;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Member/Login/" + username + "/" + password;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);

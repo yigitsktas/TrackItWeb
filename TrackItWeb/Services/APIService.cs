@@ -16,7 +16,7 @@ namespace TrackItWeb.Services
 		public async Task<List<Recipe>> GetRecipes()
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetRecipes";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/GetRecipes";
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -43,7 +43,7 @@ namespace TrackItWeb.Services
 		public async Task<List<Recipe>> GetMemberRecipes(int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetMemberRecipes/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/GetMemberRecipes/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -70,7 +70,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> CreateRecipe(StringContent info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/CreateRecipe/";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/CreateRecipe/";
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
 
@@ -80,7 +80,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> DeleteRecipe(Guid id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/DeleteRecipe/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/DeleteRecipe/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -90,7 +90,7 @@ namespace TrackItWeb.Services
 		public async Task<List<Nutrient>> GetNutrients()
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetNutrients";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/GetNutrients";
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -113,12 +113,12 @@ namespace TrackItWeb.Services
 			}
 		}
 
-		public async Task<bool> CreateMemberNutrient(string info)
+		public async Task<bool> CreateMemberNutrient(StringContent info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/CreateMemberNutrient/" + info + "/a";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/CreateMemberNutrient";
 			client.BaseAddress = new Uri(url);
-			HttpResponseMessage responseMessage = await client.GetAsync(url);
+			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
 
 			return responseMessage.IsSuccessStatusCode;
 		}
@@ -126,7 +126,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> DeleteMemberNutrient(Guid id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/DeleteMemberNutrient/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/DeleteMemberNutrient/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -136,7 +136,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> UpdateMemberNutrient(StringContent info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/UpdateMemberNutrient";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/UpdateMemberNutrient";
 			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
 
 			return responseMessage.IsSuccessStatusCode;
@@ -145,7 +145,7 @@ namespace TrackItWeb.Services
 		public async Task<MemberNutrient> GetMemberNutrientLog(Guid id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetMemberNutrientLog/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/GetMemberNutrientLog/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -171,38 +171,7 @@ namespace TrackItWeb.Services
 		public async Task<List<MemberNutrient>> GetMemberNutrientLogs(int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetMemberNutrientLogs/" + id;
-			client.BaseAddress = new Uri(url);
-			HttpResponseMessage responseMessage = await client.GetAsync(url);
-
-			if (responseMessage.IsSuccessStatusCode == true)
-			{
-				var memberNutrients = JsonConvert.DeserializeObject<List<MemberNutrient>>(await responseMessage.Content.ReadAsStringAsync());
-
-				if (memberNutrients != null)
-				{
-					return memberNutrients;
-				}
-				else
-				{
-					return new List<MemberNutrient>();
-				}
-			}
-			else
-			{
-				return new List<MemberNutrient>();
-			}
-		}
-
-		public async Task<List<MemberNutrient>> GetMemberNutrientFilteredLogs(int id, string name, string orderBy)
-		{
-			if (name == null)
-			{
-				name = Guid.NewGuid().ToString();
-			}
-
-			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetMemberNutrientFilteredLogs/" + name + "/" + orderBy + "/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/GetMemberNutrientLogs/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -228,7 +197,7 @@ namespace TrackItWeb.Services
 		public async Task<Nutrient> GetNutrientByID(int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetNutrientByID/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/GetNutrientByID/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -254,7 +223,7 @@ namespace TrackItWeb.Services
 		public async Task<Recipe> GetRecipe(Guid id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetRecipe/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/GetRecipe/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -280,7 +249,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> UpdateRecipe(StringContent info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/UpdateRecipe";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/UpdateRecipe";
 			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
 
 			return responseMessage.IsSuccessStatusCode;
@@ -289,7 +258,7 @@ namespace TrackItWeb.Services
 		public async Task<List<Recipe>> GetRandomRecipes()
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetRandomRecipe";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/GetRandomRecipe";
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -316,7 +285,7 @@ namespace TrackItWeb.Services
 		public async Task<List<NAnalytics>> GetNutrientAnalytics(int id, string date, string info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Nutrient/GetNutrientAnalytics/" + id + "/" + info + "/" + date;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Nutrient/GetNutrientAnalytics/" + id + "/" + info + "/" + date;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -348,7 +317,7 @@ namespace TrackItWeb.Services
 		public async Task<List<MemberSpecificWorkout>> GetMSWorkouts(int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetMSWorkouts/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetMSWorkouts/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -375,7 +344,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> CreateMSWorkout(string info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/CreateMSWorkout/" + info;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/CreateMSWorkout/" + info;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -385,7 +354,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> UpdateMSWorkout(StringContent info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/UpdateMSWorkout";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/UpdateMSWorkout";
 			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
 
 			return responseMessage.IsSuccessStatusCode;
@@ -394,7 +363,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> DeleteMSWorkout(Guid id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/DeleteMSWorkout/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/DeleteMSWorkout/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -404,7 +373,7 @@ namespace TrackItWeb.Services
 		public async Task<MemberSpecificWorkout> GetMSWorkout(Guid id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetMSWorkout/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetMSWorkout/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -430,7 +399,7 @@ namespace TrackItWeb.Services
 		public async Task<Workout> GetWorkout(Guid id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetWorkout/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetWorkout/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -456,7 +425,7 @@ namespace TrackItWeb.Services
 		public async Task<List<Workout>> GetWorkouts()
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetWorkouts/";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetWorkouts/";
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -482,7 +451,7 @@ namespace TrackItWeb.Services
 		public async Task<WorkoutType> GetWorkoutType(int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetWorkoutType/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetWorkoutType/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -509,7 +478,7 @@ namespace TrackItWeb.Services
 		public async Task<MuscleGroup> GetMuscleGroup(int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetMuscleGroup/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetMuscleGroup/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -536,7 +505,7 @@ namespace TrackItWeb.Services
 		public async Task<List<WorkoutType>> GetWorkoutTypes()
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetWorkoutTypes/";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetWorkoutTypes/";
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -563,7 +532,7 @@ namespace TrackItWeb.Services
 		public async Task<List<MuscleGroup>> GetMuscleGroups()
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetMuscleGroups/";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetMuscleGroups/";
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -590,7 +559,7 @@ namespace TrackItWeb.Services
 		public async Task<List<Workout>> GetRandomWorkouts()
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetRandomWorkout";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetRandomWorkout";
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -616,7 +585,7 @@ namespace TrackItWeb.Services
 		public async Task<string> CreateMWorkoutLog(string name, string notes, int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/CreateMWorkoutLog/" + name + "/" + notes + "/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/CreateMWorkoutLog/" + name + "/" + notes + "/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -636,7 +605,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> UpdateMWorkoutLog(StringContent info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/UpdateWorkoutLog";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/UpdateWorkoutLog";
 			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
 
 			return responseMessage.IsSuccessStatusCode;
@@ -645,7 +614,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> DeleteMWorkoutLog(Guid id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/DeleteMWorkouLog/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/DeleteMWorkouLog/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -655,7 +624,7 @@ namespace TrackItWeb.Services
 		public async Task<MemberWorkoutLog> GetMemberWorkoutLog(Guid id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetMWorkoutLog/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetMWorkoutLog/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -682,7 +651,7 @@ namespace TrackItWeb.Services
 		public async Task<List<MemberWorkoutLog>> GetMemberWorkoutLogs(int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetMWorkoutLogs/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetMWorkoutLogs/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -709,7 +678,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> CreateWorkoutLogStat(StringContent info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/CreateWorkoutLogStat";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/CreateWorkoutLogStat";
 			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
 
 			return responseMessage.IsSuccessStatusCode;
@@ -718,7 +687,7 @@ namespace TrackItWeb.Services
 		public async Task<List<MemberWorkoutLogStat_DM>> GetMemberWorkoutLogStat(int memberId, int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetMemberWorkoutLogStat/" + memberId + "/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetMemberWorkoutLogStat/" + memberId + "/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -745,7 +714,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> DeleteMemberWorkoutLogStat(int memberId, int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/DeleteMemberWorkoutLogStat/" + memberId + "/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/DeleteMemberWorkoutLogStat/" + memberId + "/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -755,7 +724,7 @@ namespace TrackItWeb.Services
 		public async Task<List<WorkoutAnalytics>> GetWorkoutAnalytics(int id, string date)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Workout/GetWorkoutAnalytics/" + id + "/" + date;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Workout/GetWorkoutAnalytics/" + id + "/" + date;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -784,12 +753,12 @@ namespace TrackItWeb.Services
 
 		#region Authentication
 
-		public async Task<Member> CreateUser(string info)
+		public async Task<Member> CreateUser(StringContent info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/CreateUser/" + info;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Member/CreateUser/";
 			client.BaseAddress = new Uri(url);
-			HttpResponseMessage responseMessage = await client.GetAsync(url);
+			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
 
 			if (responseMessage.IsSuccessStatusCode == true)
 			{
@@ -813,7 +782,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> Login(string username, string password)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/Login/" + username + "/" + password;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Member/Login/" + username + "/" + password;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -829,7 +798,7 @@ namespace TrackItWeb.Services
 		public async Task<Member> GetMember(int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/GetMember/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Member/GetMember/" + id;
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
 			if (responseMessage.IsSuccessStatusCode == true)
@@ -854,7 +823,7 @@ namespace TrackItWeb.Services
 		public async Task<MemberMetric> GetMemberMetric(int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/GetMemberMetric/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Member/GetMemberMetric/" + id;
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
 			if (responseMessage.IsSuccessStatusCode == true)
@@ -879,7 +848,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> UpdateMember(string info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/UpdateMember/" + info;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Member/UpdateMember/" + info;
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
 			return responseMessage.IsSuccessStatusCode;
@@ -888,7 +857,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> CreateChatLog(StringContent info)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/CreateChatLog";
+			string url = "https://ytrackitapi.azurewebsites.net/api/Member/CreateChatLog";
 			HttpResponseMessage responseMessage = await client.PostAsync(url, info);
 
 			return responseMessage.IsSuccessStatusCode;
@@ -897,7 +866,7 @@ namespace TrackItWeb.Services
 		public async Task<List<ChatLog>> GetChatLogs(int id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/GetChatLogs/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Member/GetChatLogs/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -924,7 +893,7 @@ namespace TrackItWeb.Services
 		public async Task<ChatLog> GetChatLog(Guid id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/GetChatLog/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Member/GetChatLog/" + id;
 
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
@@ -951,7 +920,7 @@ namespace TrackItWeb.Services
 		public async Task<bool> DeleteChatLog(Guid id)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/DeleteChatLog/" + id;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Member/DeleteChatLog/" + id;
 			client.BaseAddress = new Uri(url);
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
@@ -965,7 +934,7 @@ namespace TrackItWeb.Services
 		public async Task<string> GetAnswer(string prompt)
 		{
 			var client = new HttpClient();
-			string url = "https://localhost:7004/api/Member/GetAnswer/" + prompt;
+			string url = "https://ytrackitapi.azurewebsites.net/api/Member/GetAnswer/" + prompt;
 			HttpResponseMessage responseMessage = await client.GetAsync(url);
 
 			if (responseMessage.IsSuccessStatusCode == true)

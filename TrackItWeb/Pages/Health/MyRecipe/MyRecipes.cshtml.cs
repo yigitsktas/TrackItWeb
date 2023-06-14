@@ -35,7 +35,7 @@ namespace TrackItWeb.Pages.Health.MyRecipe
 			{
 				if (!string.IsNullOrEmpty(searchString))
 				{
-					IndexVM = memberRecipes.Where(x => x.Summary.Contains(searchString)).ToList();
+					IndexVM = memberRecipes.Where(x => x.Summary.ToLower().Contains(searchString)).ToList();
 				}
 				else
 				{

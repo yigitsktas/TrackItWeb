@@ -40,15 +40,15 @@
 									<div>
 										<input type="hidden" asp-for="Index_VM.MemberMetricID"/>
 										<p class="text-dark fw-bold mb-0">height.</p>
-										<input class="mb-2 fw-bold" id="height" style="width: 80px;" type="number" asp-for="Index_VM.Height" />
+										<input type ="number" class="mb-2 fw-bold" id="height" style="width: 80px;" asp-for="Index_VM.Height" />
 									</div>
 									<div class="px-3">
 										<p class="text-dark fw-bold mb-0">weight.</p>
-										<input class="mb-2 fw-bold" id="weight" style="width: 80px;" type="number" asp-for="Index_VM.Weight" />
+										<input type="number" class="mb-2 fw-bold" id="weight" style="width: 80px;" asp-for="Index_VM.Weight" />
 									</div>
 									<div>
 										<p class="text-dark fw-bold mb-0">bmi.</p>
-										<input class="mb-3 fw-bold" id="bmi" style="width: 80px;" type="number" asp-for="Index_VM.BMI" readonly />
+										<input type="number" class="mb-3 fw-bold" id="bmi" style="width: 80px;"  asp-for="Index_VM.BMI" readonly />
 									</div>
 								</div>
 								<button type="submit" asp-page-handler="Update" class="btn btn-outline-dark fw-bold rounded-0 btn-sm mt-3">

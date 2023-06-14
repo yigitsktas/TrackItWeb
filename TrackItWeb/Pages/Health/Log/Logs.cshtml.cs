@@ -26,6 +26,8 @@ namespace TrackItWeb.Pages.Health.Log
 		{
 			var data = new List<MemberNutrient>();
 
+			data = await _apiService.GetMemberNutrientLogs(User.GetMemberID());
+			
 			Dictionary<string, object> map = new()
 			{
 				{"SearchString", searchString},
@@ -33,16 +35,6 @@ namespace TrackItWeb.Pages.Health.Log
 			};
 
 			Parameters = map;
-
-			if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(orderBy))
-			{
-				data = await _apiService.GetMemberNutrientFilteredLogs(User.GetMemberID(), searchString, orderBy);
-			}
-			else
-			{
-				var data1 = await _apiService.GetMemberNutrientLogs(User.GetMemberID());
-				data = data1.OrderByDescending(x => x.CreatedDate).ToList();
-			}
 
 			var memberNutrients = data.ToList();
 
@@ -72,7 +64,25 @@ namespace TrackItWeb.Pages.Health.Log
 					}
 				}
 
-				Index = memberNutrientsLogs;
+				if (!string.IsNullOrEmpty(searchString))
+				{
+					Index = memberNutrientsLogs.Where(x => x.NutrientName.ToLower().Contains(searchString)).ToList();
+				}
+				else if (!string.IsNullOrEmpty(orderBy))
+				{
+					if (orderBy == "date-desc")
+					{
+						Index = memberNutrientsLogs.OrderByDescending(x => x.CreatedDate).ToList();
+					}
+					else
+					{
+						Index = memberNutrientsLogs.OrderBy(x => x.CreatedDate).ToList();
+					}
+				}
+				else
+				{
+					Index = memberNutrientsLogs.OrderByDescending(x => x.CreatedDate).ToList();
+				}
 				
 				return Page();
 			}

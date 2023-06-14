@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Security.Claims;
 using TrackItWeb.Services;
+using System.Text;
 
 namespace TrackItWeb.Pages.Authentication
 {
@@ -38,7 +39,9 @@ namespace TrackItWeb.Pages.Authentication
 
 				var info = JsonConvert.SerializeObject(member);
 
-				var rMember = await _apiService.CreateUser(info);
+				StringContent content = new StringContent(info, Encoding.UTF8, "application/json");
+
+				var rMember = await _apiService.CreateUser(content);
 
 				if (rMember != null)
 				{

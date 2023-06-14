@@ -18,18 +18,25 @@
 </nav>
 
 <h1 class="text-center fw-bold text-dark mb-1">workout // <b id="charttitle"></b></h1>
-
-<div class="row">
-	<div class="col-xl-12 col-md-12 text-center">
-		<select id="charttype" class="form-control-sm border border-2 rounded-0 bg-transparent text-dark fw-bold" onchange="SetChartDetails();">
-			<option class="text-dark" value="weekly" selected>weekly</option>
-			<option class="text-dark" value="monthly">monthly</option>
-		</select>
+<form method="get">
+	<div class="row mt-3 mb-3">
+		<div class="col-xl-6 col-md-12 col-6 text-center">
+			<select id="charttype" class="form-control-sm border border-2 rounded-0 bg-transparent text-dark fw-bold" onchange="SetChartDetails();">
+				<option class="text-dark" value="weekly" selected>weekly</option>
+				<option class="text-dark" value="monthly">monthly</option>
+			</select>
+		</div>
+		<div class="col-xl-6 col-md-12 col-6 text-center">
+			<select id="charttype1" name="filter2" class="form-control-sm border border-2 rounded-0 bg-transparent text-dark fw-bold" onchange="SetChartDetails();">
+				<option class="text-dark" value="1" selected>reps</option>
+				<option class="text-dark" value="2">weights</option>
+			</select>
+		</div>
 	</div>
-</div>
 
-<div id="chart">
+<div class="mt-3" id="chart">
 </div>
+</form>
 
 <div class="col-xl-12 text-center">
 	<a class="btn btn-outline-dark border-2 btn-sm m-3 rounded-0 fw-bold" href="/Fitness/Index">go back.</a>
@@ -42,12 +49,13 @@
 
 	function SetChartDetails() {
 		var DataName = $("#charttype option:selected").val();
+		var DataName2 = $("#charttype1 option:selected").val();
 		var Params = " ";
 		var r = "";
 
 		$("#charttitle").text($("#charttype option:selected").text())
-		
-		var url = "?Filter=" + DataName + "&handler=Formatted";
+
+		var url = "?Filter=" + DataName + "&Filter2=" + DataName2 + "&handler=Formatted";
 
 		$.getJSON(url, function (response) {
 			var options = {
@@ -77,34 +85,33 @@
 				tooltip: { enabled: true },
 				dataLabels: { enabled: true },
 				grid: { show: true, borderColor: '#000000' },
-				xaxis: {
-					labels: {
-						show: true,
-						style: {
-							fontSize: '14px',
-							cssClass: 'apexcharts-yaxis-label',
-							colors: '#000000'
-						}
-					}
-				},
-				yaxis: {
-					labels: {
-						show: true,
-						align: 'right',
-						style: {
-							fontSize: '12px',
-							cssClass: 'apexcharts-xaxis-label',
-							colors: '#000000'
-						}
-					}
-				}
+				//xaxis: {
+				//	labels: {
+				//		show: true,
+				//		style: {
+				//			fontSize: '14px',
+				//			cssClass: 'apexcharts-yaxis-label',
+				//			colors: '#000000'
+				//		}
+				//	}
+				//},
+				//yaxis: {
+				//	labels: {
+				//		show: true,
+				//		align: 'right',
+				//		style: {
+				//			fontSize: '12px',
+				//			cssClass: 'apexcharts-xaxis-label',
+				//			colors: '#000000'
+				//		}
+				//	}
+				//}
 			};
 
 			var chart = new ApexCharts(document.querySelector('#chart'), options);
 			chart.render();
 		});
-		chart.resetSeries();
-
+			chart.updateSeries(true, true);
 	}
 
 </script>

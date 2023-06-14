@@ -63,7 +63,7 @@ namespace TrackItWeb.Pages.Health.Recipe
 
                 if (!string.IsNullOrEmpty(searchString))
                 {
-                    Index_VM = model.Where(x => x.Title.Contains(searchString)).ToList();
+                    Index_VM = model.Where(x => x.Title.ToLower().Contains(searchString)).ToList();
                 }
                 else
                 {

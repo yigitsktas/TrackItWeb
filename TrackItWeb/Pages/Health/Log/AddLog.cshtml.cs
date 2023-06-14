@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Text;
 using TrackItWeb.DataModels;
 using TrackItWeb.Entities;
 using TrackItWeb.Helpers;
@@ -42,11 +43,11 @@ namespace TrackItWeb.Pages.Health.Log
         [BindProperty]
         public AddNutrientLogDM? addLogDM { get; set; }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(AddNutrientLogDM? addLogDM)
         {
             MemberNutrient memberNutrient = new();
 
-            memberNutrient.MemberID = User.GetMemberID();
+			memberNutrient.MemberID = User.GetMemberID();
             memberNutrient.NutrientID = addLogDM.NutrientID;
             memberNutrient.Notes = addLogDM.Notes;
             memberNutrient.GUID = Guid.NewGuid();
@@ -56,7 +57,9 @@ namespace TrackItWeb.Pages.Health.Log
 
             var info = JsonConvert.SerializeObject(memberNutrient);
 
-            var isTrue = await _apiService.CreateMemberNutrient(info);
+			StringContent content = new StringContent(info, Encoding.UTF8, "application/json");
+
+			var isTrue = await _apiService.CreateMemberNutrient(content);
 
             if (isTrue)
             {
